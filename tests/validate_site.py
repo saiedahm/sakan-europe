@@ -64,8 +64,8 @@ for relative in ("index.html", "properties.html", "contact.html", "login.html", 
 language_script = ROOT / "i18n.js"
 if language_script.is_file():
     js = language_script.read_text(encoding="utf-8")
-    for language in ('"ar"', '"en"', '"de"', '"fr"', '"es"'):
-        require(language in js, f"Missing supported language {language}")
+    for language in ("ar", "en", "de", "fr", "es"):
+        require(re.search(r"\\b" + language + r"\\s*:", js) is not None, f"Missing supported language {language}")
     require("localStorage" in js, "Language preference should persist between pages")
 
 config_path = ROOT / "vercel.json"
