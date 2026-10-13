@@ -591,6 +591,7 @@
     let footer=document.querySelector("footer");
     if(!footer){footer=document.createElement("footer");document.body.appendChild(footer)}
     footer.classList.add("sakan-global-footer");
+    /* Keep one footer only: preserve the page's own footer navigation when it exists. */
     if(!footer.querySelector(".sakan-legal-links") && !footer.querySelector(".footer-links")){
       const nav=document.createElement("nav");nav.className="sakan-legal-links";nav.setAttribute("aria-label","Legal links");
       nav.innerHTML='<a href="contact.html" data-ar="اتصل بنا">اتصل بنا</a><a href="privacy.html" data-ar="سياسة الخصوصية">سياسة الخصوصية</a><a href="terms.html" data-ar="الشروط والأحكام">الشروط والأحكام</a><a href="impressum.html" data-ar="إشعار قانوني">إشعار قانوني</a><a href="pricing.html">الباقات والأسعار</a><a href="advertising.html">إعلانات الشركات</a>';
