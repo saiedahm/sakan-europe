@@ -119,9 +119,9 @@
     let footer=document.querySelector("footer");
     if(!footer){footer=document.createElement("footer");document.body.appendChild(footer)}
     footer.classList.add("sakan-global-footer");
-    if(!footer.querySelector(".sakan-legal-links")){
+    if(!footer.querySelector(".sakan-legal-links") && !footer.querySelector(".footer-links")){
       const nav=document.createElement("nav");nav.className="sakan-legal-links";nav.setAttribute("aria-label","Legal links");
-      nav.innerHTML='<a href="contact.html" data-ar="اتصل بنا">اتصل بنا</a><a href="privacy.html" data-ar="سياسة الخصوصية">سياسة الخصوصية</a><a href="terms.html" data-ar="الشروط والأحكام">الشروط والأحكام</a><a href="impressum.html" data-ar="إشعار قانوني">إشعار قانوني</a>';
+      nav.innerHTML='<a href="contact.html" data-ar="اتصل بنا">اتصل بنا</a><a href="privacy.html" data-ar="سياسة الخصوصية">سياسة الخصوصية</a><a href="terms.html" data-ar="الشروط والأحكام">الشروط والأحكام</a><a href="impressum.html" data-ar="إشعار قانوني">إشعار قانوني</a><a href="pricing.html">الباقات والأسعار</a><a href="advertising.html">إعلانات الشركات</a>';
       footer.appendChild(nav);
     }
     if(!footer.querySelector(".sakan-contact-line")){
@@ -155,9 +155,25 @@
   }
   function addStyles(){
     if(document.getElementById("sakan-i18n-style"))return;
-    const s=document.createElement("style");s.id="sakan-i18n-style";s.textContent='.language-switcher{font-family:inherit!important}.sakan-global-footer{border-top:1px solid #e8b34f;padding:18px 5%;text-align:center;color:#d5deec;background:linear-gradient(110deg,#03152c,#061e3b);font-size:13px}.sakan-legal-links{display:flex;gap:10px 18px;justify-content:center;align-items:center;flex-wrap:wrap;margin:8px auto 12px}.sakan-legal-links a{color:#ffda86;text-decoration:none}.sakan-legal-links a:hover{text-decoration:underline}.sakan-contact-line{margin:8px auto;direction:ltr;overflow-wrap:anywhere}.sakan-contact-line a{color:#ffda86}.sakan-rights{margin-top:9px;font-size:12px;line-height:1.8}.language-switcher:focus-visible,.sakan-legal-links a:focus-visible{outline:2px solid #ffda86;outline-offset:3px}@media(max-width:600px){.language-switcher{max-width:100%;width:auto}.sakan-contact-line{font-size:12px}}';
+    const s=document.createElement("style");s.id="sakan-i18n-style";s.textContent='.language-switcher{font-family:inherit!important}#sakan-legal-modal{display:none;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;padding:18px}#sakan-legal-modal.is-open{display:flex}.sakan-modal-shade{position:absolute;inset:0;background:rgba(0,7,18,.82);backdrop-filter:blur(7px)}.sakan-modal-card{position:relative;width:min(920px,96vw);height:min(82vh,760px);background:#04172f;border:2px solid #e8b34f;border-radius:20px;box-shadow:0 24px 80px #000b;padding:48px 12px 12px;overflow:hidden}.sakan-modal-card iframe{width:100%;height:100%;border:1px solid #b88b42;border-radius:11px;background:#03152e}.sakan-modal-close{position:absolute;top:8px;inset-inline-end:10px;width:34px;height:34px;border:1px solid #e8b34f;border-radius:50%;background:#092747;color:#ffda86;font-size:25px;line-height:1;cursor:pointer}.sakan-modal-close:focus-visible{outline:2px solid #ffda86;outline-offset:3px}.sakan-global-footer{border-top:1px solid #e8b34f;padding:18px 5%;text-align:center;color:#d5deec;background:linear-gradient(110deg,#03152c,#061e3b);font-size:13px}.sakan-legal-links{display:flex;gap:10px 18px;justify-content:center;align-items:center;flex-wrap:wrap;margin:8px auto 12px}.sakan-legal-links a{color:#ffda86;text-decoration:none}.sakan-legal-links a:hover{text-decoration:underline}.sakan-contact-line{margin:8px auto;direction:ltr;overflow-wrap:anywhere}.sakan-contact-line a{color:#ffda86}.sakan-rights{margin-top:9px;font-size:12px;line-height:1.8}.language-switcher:focus-visible,.sakan-legal-links a:focus-visible{outline:2px solid #ffda86;outline-offset:3px}@media(max-width:600px){.language-switcher{max-width:100%;width:auto}.sakan-contact-line{font-size:12px}}';
     document.head.appendChild(s);
   }
-  function start(){addStyles();addFooter();const select=installSelector();applyLanguage(currentLang());if(select)select.value=currentLang()}
+
+  function installLegalModal(){
+    if(document.getElementById("sakan-legal-modal")) return;
+    const shell=document.createElement("div");shell.id="sakan-legal-modal";shell.setAttribute("role","dialog");shell.setAttribute("aria-modal","true");shell.setAttribute("aria-label","Legal information");
+    shell.innerHTML='<div class="sakan-modal-shade" data-modal-close="true"></div><section class="sakan-modal-card"><button type="button" class="sakan-modal-close" aria-label="Close legal information" data-modal-close="true">×</button><iframe title="Legal information" loading="lazy"></iframe></section>';
+    document.body.appendChild(shell);
+    function close(){shell.classList.remove("is-open");shell.querySelector("iframe").src="about:blank";document.body.style.overflow="";}
+    shell.querySelectorAll("[data-modal-close]").forEach(b=>b.addEventListener("click",close));
+    document.addEventListener("keydown",e=>{if(e.key==="Escape"&&shell.classList.contains("is-open"))close()});
+    document.addEventListener("click",e=>{
+      const a=e.target.closest('a[href="privacy.html"],a[href="terms.html"],a[href="impressum.html"]');
+      if(!a)return;
+      if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;
+      e.preventDefault();shell.querySelector("iframe").src=a.getAttribute("href");shell.classList.add("is-open");document.body.style.overflow="hidden";shell.querySelector("button").focus();
+    });
+  }
+  function start(){addStyles();addFooter();installLegalModal();const select=installSelector();applyLanguage(currentLang());if(select)select.value=currentLang()}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
 })();
