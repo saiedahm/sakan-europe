@@ -1,0 +1,9 @@
+{
+  "name": "sakan-europe",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SAKAN EUROPE website with secure Stripe Checkout API",
+  "dependencies": {
+    "stripe": "^18.5.0"
+  }
+}
