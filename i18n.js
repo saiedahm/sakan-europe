@@ -6,7 +6,8 @@
     en: {label:"English",dir:"ltr",font:'Arial, sans-serif'},
     de: {label:"Deutsch",dir:"ltr",font:'Arial, sans-serif'},
     fr: {label:"Français",dir:"ltr",font:'Arial, sans-serif'},
-    es: {label:"Español",dir:"ltr",font:'Arial, sans-serif'}
+    es: {label:"Español",dir:"ltr",font:'Arial, sans-serif'},
+    ru: {label:"Русский",dir:"ltr",font:'Arial, sans-serif'}
   };
   const D = {
     "الرئيسية":{en:"Home",de:"Startseite",fr:"Accueil",es:"Inicio"},
@@ -562,6 +563,113 @@
   }
 });
 
+
+  // Russian interface translations for shared navigation and the most-used page content.
+  Object.assign(D, {
+  "الرئيسية": {ru:"Главная"},
+  "العقارات": {ru:"Недвижимость"},
+  "للبيع": {ru:"Продажа"},
+  "للإيجار": {ru:"Аренда"},
+  "الدول والمدن": {ru:"Страны и города"},
+  "من نحن": {ru:"О нас"},
+  "اتصل بنا": {ru:"Контакты"},
+  "الأسئلة الشائعة": {ru:"Часто задаваемые вопросы"},
+  "سياسة الخصوصية": {ru:"Политика конфиденциальности"},
+  "الشروط والأحكام": {ru:"Условия использования"},
+  "تسجيل الدخول": {ru:"Войти"},
+  "إنشاء حساب": {ru:"Создать аккаунт"},
+  "سكن أوروبا": {ru:"SAKAN EUROPE"},
+  "ابحث عن عقارك المثالي": {ru:"Найдите недвижимость своей мечты"},
+  "في أوروبا": {ru:"в Европе"},
+  "اكتشف أفضل الشقق والمنازل والاستثمارات العقارية": {ru:"Откройте для себя квартиры, дома и инвестиционную недвижимость"},
+  "الدولة": {ru:"Страна"},
+  "اختر الدولة": {ru:"Выберите страну"},
+  "المدينة أو المنطقة": {ru:"Город или район"},
+  "اختر المدينة أو المنطقة": {ru:"Выберите город или район"},
+  "نوع العقار": {ru:"Тип недвижимости"},
+  "أي نوع": {ru:"Любой тип"},
+  "البيع أو الإيجار": {ru:"Продажа или аренда"},
+  "البيع والإيجار": {ru:"Продажа и аренда"},
+  "الميزانية القصوى (€)": {ru:"Максимальный бюджет (€)"},
+  "ابحث": {ru:"Поиск"},
+  "استكشف العقارات في أوروبا": {ru:"Исследуйте недвижимость в Европе"},
+  "عقارات موثوقة": {ru:"Надёжные объекты недвижимости"},
+  "من وكلاء ومعلنين": {ru:"От агентств и рекламодателей"},
+  "بحث آمن وموثوق": {ru:"Безопасный и надёжный поиск"},
+  "تجربة بحث سهلة": {ru:"Удобный поиск"},
+  "دعم متعدد اللغات": {ru:"Многоязычная поддержка"},
+  "على مدار الساعة": {ru:"Круглосуточно"},
+  "فرص استثمارية مميزة": {ru:"Особые инвестиционные возможности"},
+  "في أفضل الأسواق الأوروبية": {ru:"На ведущих рынках Европы"},
+  "تفاصيل العقار ←": {ru:"Подробнее об объекте →"},
+  "شقة فاخرة في قلب برلين": {ru:"Роскошная квартира в центре Берлина"},
+  "شقة بإطلالة بحرية رائعة": {ru:"Квартира с прекрасным видом на море"},
+  "فيلا حديثة مع حديقة خاصة": {ru:"Современная вилла с частным садом"},
+  "برلين - ألمانيا": {ru:"Берлин, Германия"},
+  "برشلونة - إسبانيا": {ru:"Барселона, Испания"},
+  "أمستردام - هولندا": {ru:"Амстердам, Нидерланды"},
+  "شهر": {ru:"месяц"},
+  "مرحبًا بعودتك": {ru:"С возвращением"},
+  "تسجيل الدخول إلى حساب سكن أوروبا.": {ru:"Войдите в свой аккаунт SAKAN EUROPE."},
+  "البريد الإلكتروني": {ru:"Электронная почта"},
+  "كلمة المرور": {ru:"Пароль"},
+  "ليس لديك حساب؟": {ru:"Нет аккаунта?"},
+  "أنشئ حسابك في سكن أوروبا": {ru:"Создайте аккаунт SAKAN EUROPE"},
+  "الاسم الكامل": {ru:"Полное имя"},
+  "نوع الحساب": {ru:"Тип аккаунта"},
+  "متابعة التسجيل": {ru:"Продолжить регистрацию"},
+  "العودة إلى الرئيسية": {ru:"На главную"},
+  "اكتشف العقارات في أوروبا": {ru:"Откройте для себя недвижимость в Европе"},
+  "الاسم": {ru:"Имя"},
+  "موضوع الرسالة": {ru:"Тема сообщения"},
+  "الرسالة": {ru:"Сообщение"},
+  "مراجعة الرسالة": {ru:"Проверить сообщение"},
+  "الإشعار القانوني": {ru:"Юридическая информация"},
+  "الإشعار القانوني (Impressum)": {ru:"Юридическая информация (Impressum)"},
+  "الخصوصية": {ru:"Конфиденциальность"},
+  "الشروط": {ru:"Условия"},
+  "الباقات والأسعار": {ru:"Тарифы и цены"},
+  "إعلانات الشركات": {ru:"Реклама для компаний"},
+  "باقات راقية لعقاراتك وأعمالك": {ru:"Премиальные тарифы для вашей недвижимости и бизнеса"},
+  "للأفراد والملاك": {ru:"Для частных лиц и владельцев недвижимости"},
+  "الباقة الأساسية": {ru:"Базовый тариф"},
+  "حتى إعلانين عقاريين نشطين": {ru:"До 2 активных объявлений о недвижимости"},
+  "صفحة عرض قياسية": {ru:"Стандартная страница объявления"},
+  "إدارة أساسية للإعلانات": {ru:"Основное управление объявлениями"},
+  "دعم عبر البريد الإلكتروني": {ru:"Поддержка по электронной почте"},
+  "اختيار الباقة": {ru:"Выбрать тариф"},
+  "الأكثر توازنًا": {ru:"Оптимальный выбор"},
+  "الباقة الاحترافية": {ru:"Профессиональный тариф"},
+  "حتى 15 إعلانًا نشطًا": {ru:"До 15 активных объявлений"},
+  "تمييز إعلان واحد كل شهر": {ru:"Одно выделенное объявление в месяц"},
+  "إحصاءات مشاهدات أساسية": {ru:"Основная статистика просмотров"},
+  "صفحة تعريف للمالك أو الوكيل": {ru:"Профиль владельца или агента"},
+  "للمكاتب العقارية": {ru:"Для агентств недвижимости"},
+  "باقة الأعمال": {ru:"Бизнес-тариф"},
+  "حتى 60 إعلانًا نشطًا": {ru:"До 60 активных объявлений"},
+  "ملف شركة وعلامة تجارية": {ru:"Профиль компании и фирменный стиль"},
+  "إبراز حتى 5 إعلانات": {ru:"Выделение до 5 объявлений"},
+  "تقارير أداء موسّعة": {ru:"Расширенные отчёты об эффективности"},
+  "ملاحظة مهمة:": {ru:"Важное примечание:"},
+  "مسودة أولية للمراجعة القانونية": {ru:"Предварительный вариант для юридической проверки"},
+  "معلومات الجهة المشغّلة": {ru:"Информация об операторе"},
+  "ملاحظات مهمة": {ru:"Важные замечания"},
+  "الاسم القانوني:": {ru:"Юридическое имя:"},
+  "العنوان البريدي:": {ru:"Почтовый адрес:"},
+  "الممثل المخوّل:": {ru:"Уполномоченный представитель:"},
+  "البريد الإلكتروني للتواصل:": {ru:"Контактная электронная почта:"},
+  "الموقع/المشروع:": {ru:"Сайт / проект:"},
+  "هذه مسودة عامة وليست استشارة قانونية.": {ru:"Это общий проект текста, а не юридическая консультация."},
+  "Kontakt": {ru:"Контакты"},
+  "معلومات الدفع": {ru:"Платёжная информация"},
+  "Stripe لم يُربط بعد.": {ru:"Stripe ещё не подключён."},
+  "PayPal لم يُربط بعد.": {ru:"PayPal ещё не подключён."},
+  "التحويل البنكي غير مفعّل بعد.": {ru:"Банковский перевод пока не активирован."},
+  "متابعة إلى الدفع": {ru:"Перейти к оплате"},
+  "اختر الباقة التي تناسب احتياجك. الأسعار التالية أسعار إطلاق مقترحة لأغراض التخطيط، ويمكن تعديلها قبل نشر الخدمة التجارية. لا يتم خصم أي مبلغ من هذه الصفحة.": {ru:"Выберите подходящий тариф. Указанные цены являются предварительными и могут измениться до коммерческого запуска. На этой странице деньги не списываются."},
+  "هذه باقات مقترحة وليست عروضًا تجارية مفعّلة بعد. الأسعار قبل الضرائب إن وجبت، ويجب تحديد شروط التجديد والإلغاء والاسترداد والضرائب بوضوح قبل تفعيل الدفع.": {ru:"Это предварительные тарифы, а не действующие коммерческие предложения. До включения оплаты необходимо определить налоги, продление, отмену и возврат средств."}
+  });
+
   const STORE = "sakan-europe-language";
   function currentLang(){try{return localStorage.getItem(STORE)||"ar"}catch(_){return "ar"}}
   function translateText(text, lang) {
@@ -647,6 +755,27 @@
       e.preventDefault();shell.querySelector("iframe").src=a.getAttribute("href");shell.classList.add("is-open");document.body.style.overflow="hidden";shell.querySelector("button").focus();
     });
   }
-  function start(){addStyles();addFooter();installLegalModal();const select=installSelector();applyLanguage(currentLang());if(select)select.value=currentLang()}
+  function installAboutModal(){
+    if(document.getElementById("sakan-about-modal"))return;
+    const shell=document.createElement("div");shell.id="sakan-about-modal";shell.setAttribute("role","dialog");shell.setAttribute("aria-modal","true");
+    shell.setAttribute("aria-label","About SAKAN EUROPE");
+    shell.innerHTML='<div class="sakan-modal-shade" data-about-close="true"></div><section class="sakan-about-card"><button type="button" class="sakan-modal-close" aria-label="Close" data-about-close="true">×</button><img class="sakan-about-logo" src="sakan-europe-logo.png" alt="SAKAN EUROPE"><div class="sakan-about-kicker">SAKAN EUROPE</div><h2 data-about-title>من نحن</h2><p data-about-copy>تسعى منصة سكن أوروبا إلى أن تكون مساحة موثوقة تجمع المجتمع المدني والشركات والأفراد، وتساعد كل من يبحث عن الاستقرار والسكن الراقي على استكشاف الخيارات العقارية في أوروبا بسهولة ووضوح. نؤمن بأن العثور على منزل مناسب خطوة مهمة نحو بداية مطمئنة، وبأن التواصل الواضح والمعلومات المنظمة يساهمان في بناء علاقات أفضل بين الباحثين عن السكن والملاك والجهات العقارية.</p><p class="sakan-about-signature">SAKAN EUROPE — سكن واستقرار وفرص أفضل</p></section>';
+    document.body.appendChild(shell);
+    const copy={
+      ar:{title:"من نحن",body:"تسعى منصة سكن أوروبا إلى أن تكون مساحة موثوقة تجمع المجتمع المدني والشركات والأفراد، وتساعد كل من يبحث عن الاستقرار والسكن الراقي على استكشاف الخيارات العقارية في أوروبا بسهولة ووضوح. نؤمن بأن العثور على منزل مناسب خطوة مهمة نحو بداية مطمئنة، وبأن التواصل الواضح والمعلومات المنظمة يساهمان في بناء علاقات أفضل بين الباحثين عن السكن والملاك والجهات العقارية.",sign:"SAKAN EUROPE — سكن واستقرار وفرص أفضل"},
+      en:{title:"About us",body:"SAKAN EUROPE aims to be a trusted space serving communities, businesses and individuals. We help people seeking stability and quality housing explore real-estate options across Europe with greater clarity and ease. We believe finding the right home is an important step toward a secure new beginning, and that clear information and respectful communication help connect home seekers, owners and property professionals.",sign:"SAKAN EUROPE — Home, stability and better opportunities"},
+      de:{title:"Über uns",body:"SAKAN EUROPE möchte ein verlässlicher Anlaufpunkt für die Zivilgesellschaft, Unternehmen und Privatpersonen sein. Wir unterstützen Menschen, die Stabilität und hochwertiges Wohnen suchen, dabei, Immobilienangebote in Europa übersichtlich und unkompliziert zu entdecken. Wir sind überzeugt, dass ein passendes Zuhause ein wichtiger Schritt in einen sicheren neuen Lebensabschnitt ist und klare Informationen den Austausch zwischen Wohnungssuchenden, Eigentümern und Immobilienprofis fördern.",sign:"SAKAN EUROPE — Zuhause, Stabilität und neue Chancen"},
+      fr:{title:"À propos",body:"SAKAN EUROPE souhaite être un espace de confiance au service de la société civile, des entreprises et des particuliers. Nous aidons celles et ceux qui recherchent la stabilité et un logement de qualité à découvrir plus facilement les possibilités immobilières en Europe. Nous pensons qu’un logement adapté est une étape importante vers un nouveau départ serein et que des informations claires favorisent les échanges entre candidats au logement, propriétaires et professionnels de l’immobilier.",sign:"SAKAN EUROPE — Logement, stabilité et nouvelles possibilités"},
+      es:{title:"Quiénes somos",body:"SAKAN EUROPE quiere ser un espacio de confianza al servicio de la sociedad civil, las empresas y los particulares. Ayudamos a quienes buscan estabilidad y una vivienda de calidad a explorar opciones inmobiliarias en Europa de forma clara y sencilla. Creemos que encontrar un hogar adecuado es un paso importante hacia un nuevo comienzo seguro y que la información clara favorece la relación entre quienes buscan vivienda, propietarios y profesionales inmobiliarios.",sign:"SAKAN EUROPE — Hogar, estabilidad y nuevas oportunidades"},
+      ru:{title:"О нас",body:"SAKAN EUROPE стремится стать надёжной платформой для гражданского общества, компаний и частных лиц. Мы помогаем тем, кто ищет стабильность и качественное жильё, удобно и понятно знакомиться с предложениями недвижимости по всей Европе. Мы верим, что подходящий дом — важный шаг к спокойному и уверенному будущему, а открытая информация и уважительное общение помогают объединять людей, ищущих жильё, владельцев и специалистов рынка недвижимости.",sign:"SAKAN EUROPE — Дом, стабильность и новые возможности"}
+    };
+    function render(){const lang=currentLang();const t=copy[lang]||copy.ar;shell.querySelector("[data-about-title]").textContent=t.title;shell.querySelector("[data-about-copy]").textContent=t.body;shell.querySelector(".sakan-about-signature").textContent=t.sign;shell.querySelector(".sakan-modal-close").setAttribute("aria-label",lang==="ru"?"Закрыть":lang==="de"?"Schließen":lang==="fr"?"Fermer":lang==="es"?"Cerrar":"إغلاق");}
+    function close(){shell.classList.remove("is-open");document.body.style.overflow="";}
+    shell.querySelectorAll("[data-about-close]").forEach(b=>b.addEventListener("click",close));
+    document.addEventListener("keydown",e=>{if(e.key==="Escape"&&shell.classList.contains("is-open"))close()});
+    document.addEventListener("click",e=>{const a=e.target.closest('a[href="#about"]');if(!a)return;e.preventDefault();render();shell.classList.add("is-open");document.body.style.overflow="hidden";shell.querySelector("button").focus();});
+    const s=document.createElement("style");s.textContent='#sakan-about-modal{display:none;position:fixed;inset:0;z-index:100000;align-items:center;justify-content:center;padding:18px}#sakan-about-modal.is-open{display:flex}.sakan-about-card{position:relative;width:min(700px,95vw);max-height:86vh;overflow:auto;padding:42px clamp(22px,5vw,48px) 32px;text-align:center;color:#f7f9ff;background:radial-gradient(ellipse at top,#10365c 0,#061b35 60%,#03152e 100%);border:2px solid #e8b34f;border-radius:24px;box-shadow:0 25px 90px #000c,0 0 0 5px #e8b34f20}.sakan-about-logo{width:88px;height:88px;object-fit:cover;border-radius:50%;border:2px solid #e8b34f;box-shadow:0 0 18px #e8b34f66}.sakan-about-kicker{margin:13px 0 4px;color:#ffda86;letter-spacing:3px;font:700 13px Arial,sans-serif;direction:ltr}.sakan-about-card h2{margin:8px 0 15px;color:#ffda86;font:700 32px Georgia,serif}.sakan-about-card p{font:18px/2.05 Georgia,serif;text-align:start;margin:0 0 14px}.sakan-about-card .sakan-about-signature{font:600 14px/1.8 Arial,sans-serif;text-align:center;color:#ffda86;margin:18px 0 0}.sakan-about-card .sakan-modal-close{position:absolute;top:12px;inset-inline-end:12px}@media(max-width:480px){.sakan-about-card{padding:42px 19px 24px}.sakan-about-card h2{font-size:27px}.sakan-about-card p{font-size:16px;line-height:1.9}.sakan-about-logo{width:72px;height:72px}}';document.head.appendChild(s);
+  }
+  function start(){addStyles();addFooter();installLegalModal();installAboutModal();const select=installSelector();applyLanguage(currentLang());if(select)select.value=currentLang()}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
 })();
