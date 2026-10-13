@@ -36,6 +36,15 @@ if homepage_path.is_file():
     require("sakan-app" not in lowered, "Homepage must not link or refer to legacy app")
     require("example.com" not in lowered, "Replace placeholder example.com URLs before release")
 
+for relative in ("properties.html", "contact.html"):
+    page = ROOT / relative
+    require(page.is_file(), f"Missing {relative}")
+    if page.is_file():
+        page_html = page.read_text(encoding="utf-8").lower()
+        require("<!doctype html>" in page_html, f"{relative} missing HTML5 doctype")
+        require('lang="ar"' in page_html and 'dir="rtl"' in page_html, f"{relative} must use Arabic RTL")
+        require("</html>" in page_html, f"{relative} missing closing html tag")
+
 config_path = ROOT / "vercel.json"
 require(config_path.is_file(), "Missing vercel.json")
 if config_path.is_file():
