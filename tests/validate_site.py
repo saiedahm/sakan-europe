@@ -1,0 +1,54 @@
+from pathlib import Path
+import json
+import re
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+errors = []
+
+def require(condition, message):
+    if not condition:
+        errors.append(message)
+
+homepage_path = ROOT / "index.html"
+require(homepage_path.is_file(), "Missing index.html")
+if homepage_path.is_file():
+    html = homepage_path.read_text(encoding="utf-8")
+    lowered = html.lower()
+    for token, label in [
+        ("<!doctype html>", "HTML5 doctype"),
+        ('lang="ar"', "Arabic document language"),
+        ('dir="rtl"', "right-to-left layout"),
+        ("sakan europe", "SAKAN EUROPE brand"),
+        ("سكن أوروبا", "Arabic brand name"),
+        ('id="search-form"', "property search form"),
+        ('id="property-cards"', "property cards"),
+        ('id="country"', "country filter"),
+        ('id="mode"', "sale/rent filter"),
+        ("@media", "responsive CSS"),
+        ("</html>", "closing HTML tag"),
+    ]:
+        require(token.lower() in lowered, f"Missing {label}")
+    for tag in ("html", "head", "body", "main", "header", "footer", "style", "script"):
+        opening = len(re.findall(fr"<{tag}(?:\s|>)", lowered))
+        closing = len(re.findall(fr"</{tag}\s*>", lowered))
+        require(opening == closing, f"Unbalanced {tag} tags: {opening} opening, {closing} closing")
+    require("sakan-app" not in lowered, "Homepage must not link or refer to legacy app")
+    require("example.com" not in lowered, "Replace placeholder example.com URLs before release")
+
+config_path = ROOT / "vercel.json"
+require(config_path.is_file(), "Missing vercel.json")
+if config_path.is_file():
+    try:
+        config = json.loads(config_path.read_text(encoding="utf-8"))
+        require(isinstance(config, dict), "vercel.json must contain an object")
+    except json.JSONDecodeError as exc:
+        errors.append(f"Invalid vercel.json: {exc}")
+
+if errors:
+    print("SAKAN EUROPE validation failed:")
+    for error in errors:
+        print(f" - {error}")
+    sys.exit(1)
+
+print("SAKAN EUROPE validation passed.")
