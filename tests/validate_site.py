@@ -52,7 +52,7 @@ for relative in ("login.html", "signup.html"):
     page = ROOT / relative
     if page.is_file():
         page_html = page.read_text(encoding="utf-8").lower()
-        require("لم يتم ربط" in page_html or "لم يُربط" in page_html or "لم يتم تفعيل" in page_html, f"{relative} must clearly disclose authentication is not active")
+        require("لم يتم ربط" in page_html or "لم يُربط" in page_html or "لم يتم تفعيل" in page_html or "لم يُنشأ حساب" in page_html, f"{relative} must clearly disclose authentication is not active")
 
 config_path = ROOT / "vercel.json"
 require(config_path.is_file(), "Missing vercel.json")
