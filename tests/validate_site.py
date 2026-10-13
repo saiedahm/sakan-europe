@@ -36,7 +36,7 @@ if homepage_path.is_file():
     require("sakan-app" not in lowered, "Homepage must not link or refer to legacy app")
     require("example.com" not in lowered, "Replace placeholder example.com URLs before release")
 
-for relative in ("properties.html", "contact.html", "login.html", "signup.html", "privacy.html", "terms.html", "impressum.html", "404.html"):
+for relative in ("properties.html", "contact.html", "login.html", "signup.html", "privacy.html", "terms.html", "impressum.html", "pricing.html", "advertising.html", "checkout.html", "404.html"):
     page = ROOT / relative
     require(page.is_file(), f"Missing {relative}")
     if page.is_file():
@@ -54,7 +54,7 @@ for relative in ("login.html", "signup.html"):
         page_html = page.read_text(encoding="utf-8").lower()
         require("لم يتم ربط" in page_html or "لم يُربط" in page_html or "لم يتم تفعيل" in page_html or "لم يُنشأ حساب" in page_html, f"{relative} must clearly disclose authentication is not active")
 
-for relative in ("index.html", "properties.html", "contact.html", "login.html", "signup.html", "privacy.html", "terms.html", "impressum.html", "404.html"):
+for relative in ("index.html", "properties.html", "contact.html", "login.html", "signup.html", "privacy.html", "terms.html", "impressum.html", "pricing.html", "advertising.html", "checkout.html", "404.html"):
     page = ROOT / relative
     if page.is_file():
         page_html = page.read_text(encoding="utf-8").lower()
