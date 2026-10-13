@@ -78,7 +78,17 @@
     "مراجعة الرسالة":{en:"Review message",de:"Nachricht prüfen",fr:"Vérifier le message",es:"Revisar mensaje"},
     "سياسة الخصوصية":{en:"Privacy policy",de:"Datenschutzerklärung",fr:"Politique de confidentialité",es:"Política de privacidad"},
     "الشروط والأحكام":{en:"Terms & conditions",de:"AGB",fr:"Conditions générales",es:"Términos y condiciones"},
-    "مسودة أولية للمراجعة القانونية":{en:"Initial draft for legal review",de:"Entwurf zur rechtlichen Prüfung",fr:"Projet initial à faire vérifier juridiquement",es:"Borrador inicial para revisión legal"}
+    "مسودة أولية للمراجعة القانونية":{en:"Initial draft for legal review",de:"Entwurf zur rechtlichen Prüfung",fr:"Projet initial à faire vérifier juridiquement",es:"Borrador inicial para revisión legal"},
+    "الإشعار القانوني (Impressum)":{en:"Legal notice (Impressum)",de:"Impressum",fr:"Mentions légales",es:"Aviso legal"},
+    "معلومات الجهة المشغّلة":{en:"Operator information",de:"Angaben zum Betreiber",fr:"Informations sur l’exploitant",es:"Información del operador"},
+    "ملاحظات مهمة":{en:"Important notes",de:"Wichtige Hinweise",fr:"Remarques importantes",es:"Notas importantes"},
+    "هذه صفحة إعداد أولي للمشروع، وليست إشعارًا قانونيًا مكتملًا. يجب استكمال البيانات الصحيحة للجهة التي ستشغّل الموقع قبل نشره للجمهور.":{en:"This is an initial project page, not a complete legal notice. Complete the real operator details before public launch.",de:"Dies ist eine vorbereitete Projektseite und kein vollständiges Impressum. Ergänzen Sie vor dem öffentlichen Start die korrekten Betreiberangaben.",fr:"Cette page est une ébauche et non une mention légale complète. Complétez les informations réelles de l’exploitant avant la mise en ligne publique.",es:"Esta página es un borrador, no un aviso legal completo. Complete los datos reales del operador antes del lanzamiento público."},
+    "الاسم القانوني:":{en:"Legal name:",de:"Rechtlicher Name:",fr:"Nom légal :",es:"Nombre legal:"},
+    "العنوان البريدي:":{en:"Postal address:",de:"Postanschrift:",fr:"Adresse postale :",es:"Dirección postal:"},
+    "الممثل المخوّل:":{en:"Authorized representative:",de:"Vertretungsberechtigte Person:",fr:"Représentant autorisé :",es:"Representante autorizado:"},
+    "البريد الإلكتروني للتواصل:":{en:"Contact email:",de:"Kontakt-E-Mail:",fr:"E-mail de contact :",es:"Correo de contacto:"},
+    "الموقع/المشروع:":{en:"Website/project:",de:"Website/Projekt:",fr:"Site/projet :",es:"Sitio/proyecto:"},
+    "هذه مسودة عامة وليست استشارة قانونية.":{en:"This is a general draft, not legal advice.",de:"Dies ist ein allgemeiner Entwurf und keine Rechtsberatung.",fr:"Il s’agit d’un projet général, pas d’un conseil juridique.",es:"Este es un borrador general, no asesoramiento jurídico."}
   };
   const STORE = "sakan-europe-language";
   function currentLang(){try{return localStorage.getItem(STORE)||"ar"}catch(_){return "ar"}}
@@ -116,7 +126,7 @@
     }
     if(!footer.querySelector(".sakan-contact-line")){
       const line=document.createElement("div");line.className="sakan-contact-line";
-      line.innerHTML='Website: <a href="https://github.com/saiedahm/sakan-europe" target="_blank" rel="noopener noreferrer">SAKAN EUROPE project</a> <span aria-hidden="true">·</span> Email: <a href="mailto:info@digital-future.ai">info@digital-future.ai</a>';
+      line.innerHTML='Website: SAKAN EUROPE (domain pending) <span aria-hidden="true">·</span> Email: <a href="mailto:info@digital-future.ai">info@digital-future.ai</a>';
       footer.appendChild(line);
     }
     if(!footer.querySelector(".sakan-rights")){
