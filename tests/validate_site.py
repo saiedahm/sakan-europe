@@ -36,7 +36,7 @@ if homepage_path.is_file():
     require("sakan-app" not in lowered, "Homepage must not link or refer to legacy app")
     require("example.com" not in lowered, "Replace placeholder example.com URLs before release")
 
-for relative in ("properties.html", "contact.html"):
+for relative in ("properties.html", "contact.html", "login.html", "signup.html", "privacy.html", "terms.html", "404.html"):
     page = ROOT / relative
     require(page.is_file(), f"Missing {relative}")
     if page.is_file():
@@ -44,6 +44,15 @@ for relative in ("properties.html", "contact.html"):
         require("<!doctype html>" in page_html, f"{relative} missing HTML5 doctype")
         require('lang="ar"' in page_html and 'dir="rtl"' in page_html, f"{relative} must use Arabic RTL")
         require("</html>" in page_html, f"{relative} missing closing html tag")
+
+for relative in ("favicon.svg", "robots.txt", "sitemap.xml", ".github/workflows/validate.yml"):
+    require((ROOT / relative).is_file(), f"Missing {relative}")
+
+for relative in ("login.html", "signup.html"):
+    page = ROOT / relative
+    if page.is_file():
+        page_html = page.read_text(encoding="utf-8").lower()
+        require("لم يتم ربط" in page_html or "لم يُربط" in page_html or "لم يتم تفعيل" in page_html, f"{relative} must clearly disclose authentication is not active")
 
 config_path = ROOT / "vercel.json"
 require(config_path.is_file(), "Missing vercel.json")
