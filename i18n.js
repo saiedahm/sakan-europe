@@ -90,6 +90,478 @@
     "الموقع/المشروع:":{en:"Website/project:",de:"Website/Projekt:",fr:"Site/projet :",es:"Sitio/proyecto:"},
     "هذه مسودة عامة وليست استشارة قانونية.":{en:"This is a general draft, not legal advice.",de:"Dies ist ein allgemeiner Entwurf und keine Rechtsberatung.",fr:"Il s’agit d’un projet général, pas d’un conseil juridique.",es:"Este es un borrador general, no asesoramiento jurídico."}
   };
+  // Expanded, page-specific built-in translations used by the shared language selector.
+  Object.assign(D, {
+  "باقات راقية لعقاراتك وأعمالك": {
+    "en": "Premium plans for your property and business",
+    "de": "Exklusive Pakete für Immobilien und Unternehmen",
+    "fr": "Des forfaits premium pour vos biens et votre entreprise",
+    "es": "Planes premium para su propiedad y negocio"
+  },
+  "اختر الباقة التي تناسب احتياجك. الأسعار التالية أسعار إطلاق مقترحة لأغراض التخطيط، ويمكن تعديلها قبل نشر الخدمة التجارية. لا يتم خصم أي مبلغ من هذه الصفحة.": {
+    "en": "Choose the plan that suits your needs. These are proposed launch prices for planning and may change before commercial launch. This page does not charge any amount.",
+    "de": "Wählen Sie das passende Paket. Die folgenden Preise sind unverbindliche Startpreise zur Planung und können vor dem kommerziellen Start geändert werden. Auf dieser Seite wird kein Betrag abgebucht.",
+    "fr": "Choisissez le forfait adapté à vos besoins. Ces prix de lancement sont indicatifs et peuvent changer avant le lancement commercial. Aucun paiement n’est prélevé sur cette page.",
+    "es": "Elija el plan adecuado. Estos precios de lanzamiento son orientativos y pueden cambiar antes del lanzamiento comercial. Esta página no cobra ningún importe."
+  },
+  "للأفراد والملاك": {
+    "en": "For individuals and property owners",
+    "de": "Für Privatpersonen und Eigentümer",
+    "fr": "Pour les particuliers et propriétaires",
+    "es": "Para particulares y propietarios"
+  },
+  "الباقة الأساسية": {
+    "en": "Basic plan",
+    "de": "Basispaket",
+    "fr": "Forfait Essentiel",
+    "es": "Plan básico"
+  },
+  "حتى إعلانين عقاريين نشطين": {
+    "en": "Up to 2 active property listings",
+    "de": "Bis zu 2 aktive Immobilienanzeigen",
+    "fr": "Jusqu’à 2 annonces immobilières actives",
+    "es": "Hasta 2 anuncios inmobiliarios activos"
+  },
+  "صفحة عرض قياسية": {
+    "en": "Standard listing page",
+    "de": "Standard-Anzeigenseite",
+    "fr": "Page d’annonce standard",
+    "es": "Página de anuncio estándar"
+  },
+  "إدارة أساسية للإعلانات": {
+    "en": "Basic listing management",
+    "de": "Einfache Anzeigenverwaltung",
+    "fr": "Gestion de base des annonces",
+    "es": "Gestión básica de anuncios"
+  },
+  "دعم عبر البريد الإلكتروني": {
+    "en": "Email support",
+    "de": "E-Mail-Support",
+    "fr": "Assistance par e-mail",
+    "es": "Soporte por correo electrónico"
+  },
+  "اختيار الباقة": {
+    "en": "Choose plan",
+    "de": "Paket auswählen",
+    "fr": "Choisir le forfait",
+    "es": "Elegir plan"
+  },
+  "الأكثر توازنًا": {
+    "en": "Best balance",
+    "de": "Ausgewogenes Angebot",
+    "fr": "Le plus équilibré",
+    "es": "La opción más equilibrada"
+  },
+  "الباقة الاحترافية": {
+    "en": "Professional plan",
+    "de": "Professional-Paket",
+    "fr": "Forfait Professionnel",
+    "es": "Plan profesional"
+  },
+  "حتى 15 إعلانًا نشطًا": {
+    "en": "Up to 15 active listings",
+    "de": "Bis zu 15 aktive Anzeigen",
+    "fr": "Jusqu’à 15 annonces actives",
+    "es": "Hasta 15 anuncios activos"
+  },
+  "تمييز إعلان واحد كل شهر": {
+    "en": "One featured listing each month",
+    "de": "Eine hervorgehobene Anzeige pro Monat",
+    "fr": "Une annonce mise en avant par mois",
+    "es": "Un anuncio destacado cada mes"
+  },
+  "إحصاءات مشاهدات أساسية": {
+    "en": "Basic view statistics",
+    "de": "Grundlegende Aufrufstatistiken",
+    "fr": "Statistiques de consultation de base",
+    "es": "Estadísticas básicas de visitas"
+  },
+  "صفحة تعريف للمالك أو الوكيل": {
+    "en": "Profile page for an owner or agent",
+    "de": "Profilseite für Eigentümer oder Makler",
+    "fr": "Page de profil du propriétaire ou de l’agent",
+    "es": "Página de perfil del propietario o agente"
+  },
+  "للمكاتب العقارية": {
+    "en": "For real estate agencies",
+    "de": "Für Immobilienbüros",
+    "fr": "Pour les agences immobilières",
+    "es": "Para agencias inmobiliarias"
+  },
+  "باقة الأعمال": {
+    "en": "Business plan",
+    "de": "Business-Paket",
+    "fr": "Forfait Entreprise",
+    "es": "Plan empresarial"
+  },
+  "حتى 60 إعلانًا نشطًا": {
+    "en": "Up to 60 active listings",
+    "de": "Bis zu 60 aktive Anzeigen",
+    "fr": "Jusqu’à 60 annonces actives",
+    "es": "Hasta 60 anuncios activos"
+  },
+  "ملف شركة وعلامة تجارية": {
+    "en": "Company profile and branding",
+    "de": "Firmenprofil und Markenauftritt",
+    "fr": "Profil d’entreprise et identité de marque",
+    "es": "Perfil de empresa e identidad de marca"
+  },
+  "إبراز حتى 5 إعلانات": {
+    "en": "Feature up to 5 listings",
+    "de": "Bis zu 5 Anzeigen hervorheben",
+    "fr": "Mettre en avant jusqu’à 5 annonces",
+    "es": "Destacar hasta 5 anuncios"
+  },
+  "تقارير أداء موسّعة": {
+    "en": "Extended performance reports",
+    "de": "Erweiterte Leistungsberichte",
+    "fr": "Rapports de performance détaillés",
+    "es": "Informes de rendimiento ampliados"
+  },
+  "ملاحظة مهمة:": {
+    "en": "Important note:",
+    "de": "Wichtiger Hinweis:",
+    "fr": "Remarque importante :",
+    "es": "Nota importante:"
+  },
+  "هذه باقات مقترحة وليست عروضًا تجارية مفعّلة بعد. الأسعار قبل الضرائب إن وجبت، ويجب تحديد شروط التجديد والإلغاء والاسترداد والضرائب بوضوح قبل تفعيل الدفع.": {
+    "en": "These are proposed plans, not active commercial offers. Prices exclude applicable taxes. Renewal, cancellation, refund and tax terms must be clearly defined before payments are enabled.",
+    "de": "Dies sind vorgeschlagene Pakete und noch keine aktiven kommerziellen Angebote. Preise verstehen sich gegebenenfalls zuzüglich Steuern. Bedingungen zu Verlängerung, Kündigung, Erstattung und Steuern müssen vor Aktivierung der Zahlung klar festgelegt werden.",
+    "fr": "Ces forfaits sont proposés à titre indicatif et ne constituent pas encore des offres commerciales actives. Les taxes applicables peuvent s’ajouter. Les conditions de renouvellement, d’annulation, de remboursement et de fiscalité doivent être précisées avant l’activation des paiements.",
+    "es": "Estos planes son propuestas y aún no son ofertas comerciales activas. Los precios no incluyen los impuestos aplicables. Las condiciones de renovación, cancelación, reembolso e impuestos deben definirse claramente antes de habilitar los pagos."
+  },
+  "مساحات إعلانية للشركات والمطوّرين": {
+    "en": "Advertising space for companies and developers",
+    "de": "Werbeflächen für Unternehmen und Projektentwickler",
+    "fr": "Espaces publicitaires pour entreprises et promoteurs",
+    "es": "Espacios publicitarios para empresas y promotores"
+  },
+  "مساحة مميزة لشركات العقارات والبناء الحديث، المطوّرين، ومشاريع الإسكان والتصميم الداخلي.": {
+    "en": "Premium visibility for real estate and modern construction companies, developers, housing projects and interior design.",
+    "de": "Exklusive Präsenz für Immobilien- und moderne Bauunternehmen, Projektentwickler, Wohnprojekte und Innenarchitektur.",
+    "fr": "Une visibilité privilégiée pour les entreprises immobilières et de construction moderne, les promoteurs, les projets résidentiels et la décoration intérieure.",
+    "es": "Visibilidad destacada para empresas inmobiliarias y de construcción moderna, promotores, proyectos residenciales y diseño de interiores."
+  },
+  "إعلان عقاري مميز": {
+    "en": "Featured property listing",
+    "de": "Hervorgehobene Immobilienanzeige",
+    "fr": "Annonce immobilière à la une",
+    "es": "Anuncio inmobiliario destacado"
+  },
+  "إبراز عقار واحد في نتائج البحث مع شارة مميزة.": {
+    "en": "Feature one property in search results with a highlighted badge.",
+    "de": "Eine Immobilie mit Hervorhebungskennzeichnung in den Suchergebnissen präsentieren.",
+    "fr": "Mettre un bien en avant dans les résultats avec un badge spécial.",
+    "es": "Destacar una propiedad en los resultados con una insignia especial."
+  },
+  "اختيار الإعلان": {
+    "en": "Choose advertising",
+    "de": "Anzeige auswählen",
+    "fr": "Choisir la publicité",
+    "es": "Elegir anuncio"
+  },
+  "إعلان شركة": {
+    "en": "Company advertisement",
+    "de": "Unternehmensanzeige",
+    "fr": "Publicité d’entreprise",
+    "es": "Anuncio de empresa"
+  },
+  "بطاقة شركة تشمل الشعار والنبذة والرابط ووسائل التواصل.": {
+    "en": "Company card with logo, description, website and contact details.",
+    "de": "Unternehmensprofil mit Logo, Beschreibung, Website und Kontaktdaten.",
+    "fr": "Fiche entreprise avec logo, description, site web et coordonnées.",
+    "es": "Ficha de empresa con logotipo, descripción, sitio web y datos de contacto."
+  },
+  "حملة مطوّر عقاري": {
+    "en": "Real estate developer campaign",
+    "de": "Kampagne für Immobilienentwickler",
+    "fr": "Campagne de promoteur immobilier",
+    "es": "Campaña de promotor inmobiliario"
+  },
+  "مساحة بارزة لمشروع بناء حديث أو مجمّع سكني أو مشروع استثماري.": {
+    "en": "Prominent placement for a modern construction project, residential complex or investment project.",
+    "de": "Prominente Platzierung für ein modernes Bauprojekt, Wohnkomplex oder Anlageprojekt.",
+    "fr": "Emplacement privilégié pour un projet de construction moderne, un complexe résidentiel ou un investissement.",
+    "es": "Espacio destacado para un proyecto de construcción moderno, complejo residencial o inversión."
+  },
+  "تُراجع جميع الإعلانات قبل النشر. لا تضمن الباقة بيع العقار أو الحصول على عملاء، ويجب أن تكون الصور وبيانات العقار وحقوق استخدامها صحيحة.": {
+    "en": "All ads are reviewed before publication. A plan does not guarantee a sale or leads. Property details, images and usage rights must be accurate.",
+    "de": "Alle Anzeigen werden vor der Veröffentlichung geprüft. Ein Paket garantiert weder einen Verkauf noch Kundenkontakte. Immobiliendaten, Bilder und Nutzungsrechte müssen korrekt sein.",
+    "fr": "Toutes les annonces sont vérifiées avant publication. Un forfait ne garantit ni vente ni prospects. Les informations, images et droits d’utilisation doivent être exacts.",
+    "es": "Todos los anuncios se revisan antes de publicarse. Un plan no garantiza ventas ni clientes potenciales. Los datos, imágenes y derechos de uso deben ser correctos."
+  },
+  "مساحة راقية لشركتك ومشروعك": {
+    "en": "Premium visibility for your company and project",
+    "de": "Exklusive Präsenz für Ihr Unternehmen und Projekt",
+    "fr": "Une visibilité premium pour votre entreprise et votre projet",
+    "es": "Visibilidad premium para su empresa y proyecto"
+  },
+  "اعرض شركتك العقارية، مشروع البناء الحديث، المجمع السكني أو خدمات التصميم والتطوير أمام المهتمين بالعقارات في أوروبا.": {
+    "en": "Present your real estate company, modern construction project, residential complex or design and development services to people interested in European property.",
+    "de": "Präsentieren Sie Ihr Immobilienunternehmen, modernes Bauprojekt, Wohnkomplex oder Ihre Design- und Entwicklungsleistungen Menschen, die sich für Immobilien in Europa interessieren.",
+    "fr": "Présentez votre agence immobilière, projet de construction moderne, complexe résidentiel ou services de conception et de développement aux personnes intéressées par l’immobilier européen.",
+    "es": "Presente su empresa inmobiliaria, proyecto de construcción moderno, complejo residencial o servicios de diseño y desarrollo a personas interesadas en inmuebles europeos."
+  },
+  "تمييز إعلان عقار واحد.": {
+    "en": "Feature one property listing.",
+    "de": "Eine Immobilienanzeige hervorheben.",
+    "fr": "Mettre en avant une annonce immobilière.",
+    "es": "Destacar un anuncio inmobiliario."
+  },
+  "بطاقة شركة": {
+    "en": "Company profile",
+    "de": "Unternehmensprofil",
+    "fr": "Fiche entreprise",
+    "es": "Perfil de empresa"
+  },
+  "ملف تعريفي وشعار وروابط الشركة.": {
+    "en": "Company profile, logo and links.",
+    "de": "Unternehmensprofil, Logo und Links.",
+    "fr": "Profil, logo et liens de l’entreprise.",
+    "es": "Perfil, logotipo y enlaces de la empresa."
+  },
+  "حملة مشروع تطوير": {
+    "en": "Development project campaign",
+    "de": "Kampagne für ein Entwicklungsprojekt",
+    "fr": "Campagne de projet immobilier",
+    "es": "Campaña de proyecto de desarrollo"
+  },
+  "مساحة بارزة لمشاريع البناء والتطوير الحديثة.": {
+    "en": "Prominent placement for modern construction and development projects.",
+    "de": "Prominente Platzierung für moderne Bau- und Entwicklungsprojekte.",
+    "fr": "Emplacement privilégié pour les projets modernes de construction et de développement.",
+    "es": "Espacio destacado para proyectos modernos de construcción y desarrollo."
+  },
+  "طلب معلومات إعلانية": {
+    "en": "Request advertising information",
+    "de": "Werbeinformationen anfordern",
+    "fr": "Demander des informations publicitaires",
+    "es": "Solicitar información publicitaria"
+  },
+  "اسم الشركة": {
+    "en": "Company name",
+    "de": "Firmenname",
+    "fr": "Nom de l’entreprise",
+    "es": "Nombre de la empresa"
+  },
+  "نوع النشاط": {
+    "en": "Business type",
+    "de": "Tätigkeitsbereich",
+    "fr": "Type d’activité",
+    "es": "Tipo de actividad"
+  },
+  "وكالة عقارية": {
+    "en": "Real estate agency",
+    "de": "Immobilienagentur",
+    "fr": "Agence immobilière",
+    "es": "Agencia inmobiliaria"
+  },
+  "شركة بناء حديث": {
+    "en": "Modern construction company",
+    "de": "Modernes Bauunternehmen",
+    "fr": "Entreprise de construction moderne",
+    "es": "Empresa de construcción moderna"
+  },
+  "مطوّر عقاري": {
+    "en": "Property developer",
+    "de": "Immobilienentwickler",
+    "fr": "Promoteur immobilier",
+    "es": "Promotor inmobiliario"
+  },
+  "تصميم داخلي": {
+    "en": "Interior design",
+    "de": "Innenarchitektur",
+    "fr": "Design d’intérieur",
+    "es": "Diseño de interiores"
+  },
+  "خدمات عقارية أخرى": {
+    "en": "Other real estate services",
+    "de": "Sonstige Immobiliendienstleistungen",
+    "fr": "Autres services immobiliers",
+    "es": "Otros servicios inmobiliarios"
+  },
+  "تفاصيل الطلب": {
+    "en": "Request details",
+    "de": "Details zur Anfrage",
+    "fr": "Détails de la demande",
+    "es": "Detalles de la solicitud"
+  },
+  "مراجعة الطلب": {
+    "en": "Review request",
+    "de": "Anfrage prüfen",
+    "fr": "Vérifier la demande",
+    "es": "Revisar solicitud"
+  },
+  "هذا نموذج واجهة فقط؛ لا يُرسل بيانات إلى الخادم حتى إعداد خدمة البريد.": {
+    "en": "This is a frontend-only form; it does not send data to a server until an email service is configured.",
+    "de": "Dieses Formular ist nur eine Oberfläche und sendet keine Daten an einen Server, bis ein E-Mail-Dienst eingerichtet ist.",
+    "fr": "Ce formulaire est uniquement visuel ; aucune donnée n’est envoyée au serveur tant qu’aucun service e-mail n’est configuré.",
+    "es": "Este formulario es solo visual; no envía datos al servidor hasta que se configure un servicio de correo."
+  },
+  "إتمام الطلب بأمان": {
+    "en": "Complete your order securely",
+    "de": "Bestellung sicher abschließen",
+    "fr": "Finaliser votre commande en toute sécurité",
+    "es": "Complete su pedido de forma segura"
+  },
+  "واجهة الدفع التجريبية — لن يتم تحصيل أي مبلغ في هذه النسخة.": {
+    "en": "Demo checkout — no payment will be collected in this version.",
+    "de": "Test-Kasse — in dieser Version wird keine Zahlung eingezogen.",
+    "fr": "Paiement de démonstration — aucun montant ne sera prélevé dans cette version.",
+    "es": "Pago de demostración: no se cobrará ningún importe en esta versión."
+  },
+  "اشتراك تجريبي": {
+    "en": "Demo subscription",
+    "de": "Testabonnement",
+    "fr": "Abonnement de démonstration",
+    "es": "Suscripción de demostración"
+  },
+  "اختر طريقة الدفع": {
+    "en": "Choose a payment method",
+    "de": "Zahlungsmethode auswählen",
+    "fr": "Choisissez un moyen de paiement",
+    "es": "Elija un método de pago"
+  },
+  "بطاقة بنكية": {
+    "en": "Bank card",
+    "de": "Bankkarte",
+    "fr": "Carte bancaire",
+    "es": "Tarjeta bancaria"
+  },
+  "الدفع عبر حساب PayPal عند التفعيل": {
+    "en": "Pay through PayPal when enabled",
+    "de": "Zahlung über PayPal nach Aktivierung",
+    "fr": "Paiement via PayPal après activation",
+    "es": "Pagar con PayPal cuando esté activado"
+  },
+  "تحويل بنكي": {
+    "en": "Bank transfer",
+    "de": "Banküberweisung",
+    "fr": "Virement bancaire",
+    "es": "Transferencia bancaria"
+  },
+  "متابعة إلى الدفع": {
+    "en": "Continue to payment",
+    "de": "Weiter zur Zahlung",
+    "fr": "Continuer vers le paiement",
+    "es": "Continuar al pago"
+  },
+  "التحويل البنكي غير مفعّل بعد.": {
+    "en": "Bank transfer is not enabled yet.",
+    "de": "Banküberweisung ist noch nicht aktiviert.",
+    "fr": "Le virement bancaire n’est pas encore activé.",
+    "es": "La transferencia bancaria aún no está activada."
+  },
+  "سيتم عرض اسم المستفيد وIBAN ومرجع الدفع هنا بعد إدخال بيانات الحساب البنكي الرسمي والتحقق منها. لا تحول أي مبلغ بناءً على هذه المعاينة.": {
+    "en": "The beneficiary name, IBAN and payment reference will appear here after official bank details are entered and verified. Do not transfer money based on this demo.",
+    "de": "Name des Empfängers, IBAN und Zahlungsreferenz werden hier angezeigt, sobald die offiziellen Bankdaten eingetragen und geprüft wurden. Überweisen Sie aufgrund dieser Demo kein Geld.",
+    "fr": "Le bénéficiaire, l’IBAN et la référence de paiement seront affichés ici après saisie et vérification des coordonnées bancaires officielles. N’effectuez aucun virement sur la base de cette démo.",
+    "es": "El beneficiario, IBAN y referencia aparecerán aquí después de introducir y verificar los datos bancarios oficiales. No realice transferencias basándose en esta demostración."
+  },
+  "Stripe لم يُربط بعد.": {
+    "en": "Stripe is not connected yet.",
+    "de": "Stripe ist noch nicht verbunden.",
+    "fr": "Stripe n’est pas encore connecté.",
+    "es": "Stripe aún no está conectado."
+  },
+  "PayPal لم يُربط بعد.": {
+    "en": "PayPal is not connected yet.",
+    "de": "PayPal ist noch nicht verbunden.",
+    "fr": "PayPal n’est pas encore connecté.",
+    "es": "PayPal aún no está conectado."
+  },
+  "الخصوصية": {
+    "en": "Privacy",
+    "de": "Datenschutz",
+    "fr": "Confidentialité",
+    "es": "Privacidad"
+  },
+  "الشروط": {
+    "en": "Terms",
+    "de": "AGB",
+    "fr": "Conditions",
+    "es": "Condiciones"
+  },
+  "الباقات والأسعار": {
+    "en": "Plans & pricing",
+    "de": "Pakete & Preise",
+    "fr": "Forfaits et tarifs",
+    "es": "Planes y precios"
+  },
+  "إعلانات الشركات": {
+    "en": "Business advertising",
+    "de": "Unternehmenswerbung",
+    "fr": "Publicité des entreprises",
+    "es": "Publicidad empresarial"
+  },
+  "الرئيسية": {
+    "en": "Home",
+    "de": "Startseite",
+    "fr": "Accueil",
+    "es": "Inicio"
+  },
+  "العقارات": {
+    "en": "Properties",
+    "de": "Immobilien",
+    "fr": "Biens immobiliers",
+    "es": "Inmuebles"
+  },
+  "سكن أوروبا": {
+    "en": "SAKAN EUROPE",
+    "de": "SAKAN EUROPE",
+    "fr": "SAKAN EUROPE",
+    "es": "SAKAN EUROPE"
+  },
+  "اتصل بنا": {
+    "en": "Contact",
+    "de": "Kontakt",
+    "fr": "Contact",
+    "es": "Contacto"
+  },
+  "البريد الإلكتروني": {
+    "en": "Email address",
+    "de": "E-Mail-Adresse",
+    "fr": "Adresse e-mail",
+    "es": "Correo electrónico"
+  },
+  "الاسم": {
+    "en": "Name",
+    "de": "Name",
+    "fr": "Nom",
+    "es": "Nombre"
+  },
+  "الرسالة": {
+    "en": "Message",
+    "de": "Nachricht",
+    "fr": "Message",
+    "es": "Mensaje"
+  },
+  "سياسة الخصوصية": {
+    "en": "Privacy policy",
+    "de": "Datenschutzerklärung",
+    "fr": "Politique de confidentialité",
+    "es": "Política de privacidad"
+  },
+  "الشروط والأحكام": {
+    "en": "Terms and conditions",
+    "de": "Allgemeine Geschäftsbedingungen",
+    "fr": "Conditions générales",
+    "es": "Términos y condiciones"
+  },
+  "الإشعار القانوني": {
+    "en": "Legal notice",
+    "de": "Impressum",
+    "fr": "Mentions légales",
+    "es": "Aviso legal"
+  },
+  "جميع الحقوق محفوظة لـ Sakan Europe. 2026 ©": {
+    "en": "© 2026 SAKAN EUROPE. All rights reserved.",
+    "de": "© 2026 SAKAN EUROPE. Alle Rechte vorbehalten.",
+    "fr": "© 2026 SAKAN EUROPE. Tous droits réservés.",
+    "es": "© 2026 SAKAN EUROPE. Todos los derechos reservés."
+  }
+});
+
   const STORE = "sakan-europe-language";
   function currentLang(){try{return localStorage.getItem(STORE)||"ar"}catch(_){return "ar"}}
   function translateText(text, lang) {
