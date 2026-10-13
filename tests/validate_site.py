@@ -36,7 +36,7 @@ if homepage_path.is_file():
     require("sakan-app" not in lowered, "Homepage must not link or refer to legacy app")
     require("example.com" not in lowered, "Replace placeholder example.com URLs before release")
 
-for relative in ("properties.html", "contact.html", "login.html", "signup.html", "privacy.html", "terms.html", "404.html"):
+for relative in ("properties.html", "contact.html", "login.html", "signup.html", "privacy.html", "terms.html", "impressum.html", "404.html"):
     page = ROOT / relative
     require(page.is_file(), f"Missing {relative}")
     if page.is_file():
@@ -45,7 +45,7 @@ for relative in ("properties.html", "contact.html", "login.html", "signup.html",
         require('lang="ar"' in page_html and 'dir="rtl"' in page_html, f"{relative} must use Arabic RTL")
         require("</html>" in page_html, f"{relative} missing closing html tag")
 
-for relative in ("favicon.svg", "robots.txt", "sitemap.xml", ".github/workflows/validate.yml"):
+for relative in ("favicon.svg", "robots.txt", "sitemap.xml", "i18n.js", ".github/workflows/validate.yml"):
     require((ROOT / relative).is_file(), f"Missing {relative}")
 
 for relative in ("login.html", "signup.html"):
@@ -53,6 +53,20 @@ for relative in ("login.html", "signup.html"):
     if page.is_file():
         page_html = page.read_text(encoding="utf-8").lower()
         require("لم يتم ربط" in page_html or "لم يُربط" in page_html or "لم يتم تفعيل" in page_html or "لم يُنشأ حساب" in page_html, f"{relative} must clearly disclose authentication is not active")
+
+for relative in ("index.html", "properties.html", "contact.html", "login.html", "signup.html", "privacy.html", "terms.html", "impressum.html", "404.html"):
+    page = ROOT / relative
+    if page.is_file():
+        page_html = page.read_text(encoding="utf-8").lower()
+        require('src="i18n.js"' in page_html, f"{relative} must load the shared language script")
+        require('href="impressum.html"' in page_html or relative == "impressum.html", f"{relative} must expose the legal notice link")
+
+language_script = ROOT / "i18n.js"
+if language_script.is_file():
+    js = language_script.read_text(encoding="utf-8")
+    for language in ('"ar"', '"en"', '"de"', '"fr"', '"es"'):
+        require(language in js, f"Missing supported language {language}")
+    require("localStorage" in js, "Language preference should persist between pages")
 
 config_path = ROOT / "vercel.json"
 require(config_path.is_file(), "Missing vercel.json")
