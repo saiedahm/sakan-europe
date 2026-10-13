@@ -592,17 +592,17 @@
     if(!footer){footer=document.createElement("footer");document.body.appendChild(footer)}
     footer.classList.add("sakan-global-footer");
     /* Keep one footer only: preserve the page's own footer navigation when it exists. */
-    if(!footer.querySelector(".sakan-legal-links") && !footer.querySelector(".footer-links")){
+    if(!footer.querySelector(".sakan-legal-links") && !footer.querySelector(".footer-links") && !footer.querySelector("a[href=\"contact.html\"]") && !footer.querySelector("a[href=\"privacy.html\"]") && !footer.querySelector("a[href=\"terms.html\"]")){
       const nav=document.createElement("nav");nav.className="sakan-legal-links";nav.setAttribute("aria-label","Legal links");
       nav.innerHTML='<a href="contact.html" data-ar="اتصل بنا">اتصل بنا</a><a href="privacy.html" data-ar="سياسة الخصوصية">سياسة الخصوصية</a><a href="terms.html" data-ar="الشروط والأحكام">الشروط والأحكام</a><a href="impressum.html" data-ar="إشعار قانوني">إشعار قانوني</a><a href="pricing.html">الباقات والأسعار</a><a href="advertising.html">إعلانات الشركات</a>';
       footer.appendChild(nav);
     }
-    if(!footer.querySelector(".sakan-contact-line")){
+    if(!footer.querySelector(".sakan-contact-line") && !footer.querySelector("a[href^=\"mailto:\"]")){
       const line=document.createElement("div");line.className="sakan-contact-line";
       line.innerHTML='Website: SAKAN EUROPE (domain pending) <span aria-hidden="true">·</span> Email: <a href="mailto:info@digital-future.ai">info@digital-future.ai</a>';
       footer.appendChild(line);
     }
-    if(!footer.querySelector(".sakan-rights")){
+    if(!footer.querySelector(".sakan-rights") && !footer.textContent.includes("© 2026")){
       const rights=document.createElement("div");rights.className="sakan-rights";
       rights.textContent="© 2026 SAKAN EUROPE — جميع الحقوق محفوظة. العلامة والتصميم والمحتوى محفوظة الحقوق.";
       footer.appendChild(rights);
