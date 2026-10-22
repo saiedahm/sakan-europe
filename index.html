@@ -143,4 +143,61 @@ document.getElementById("panelContent").innerHTML='<h2>'+title+'</h2>'+out;docum
  dots.forEach(dot=>dot.addEventListener("click",function(e){e.stopPropagation();showScene(Number(dot.dataset.scene))}));
  showScene(0);
 })();
-</script></body></html>
+</script>
+<style>
+#gdprConsent{position:fixed;inset:0;z-index:1000;background:#030611d9;backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:20px}
+#gdprConsent .consent-card,#royalAuth .auth-card{width:min(100%,480px);background:#0F182E;border:1px solid #D4AF37;border-radius:18px;padding:30px;box-shadow:0 0 35px #d4af3725;position:relative;text-align:center}
+#royalAuth{position:fixed;inset:0;z-index:1001;background:#030611d9;backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:20px}
+#royalAuth .auth-close{position:absolute;right:14px;top:10px;color:#D4AF37;background:transparent;border:0;font-size:30px}
+#royalAuth .auth-crest{width:66px;height:66px;border:2px solid #D4AF37;border-radius:50%;display:grid;place-items:center;color:#D4AF37;font-size:30px;margin:0 auto 14px;box-shadow:0 0 22px #d4af3730}
+#royalAuth input[type=email]{width:100%;padding:14px;background:#060B18;color:#F8F9FA;border:1px solid #D4AF37;border-radius:8px;margin:12px 0}
+#royalAuth .auth-status{min-height:24px;color:#F3E5AB;font-size:13px;margin-top:12px}
+#royalAuth .consent-check{display:flex;gap:10px;text-align:left;font-size:12px;line-height:1.5;margin:12px 0}
+</style>
+<div id="gdprConsent" role="dialog" aria-modal="true" aria-labelledby="consentHeading">
+ <section class="consent-card"><div class="auth-crest">♛</div><h2 id="consentHeading" class="gold">Datenschutz bei SAKAN EUROPE</h2>
+ <p>Wir verarbeiten Ihre Angaben nur für die von Ihnen ausgewählten Zwecke. Lesen Sie unsere Datenschutzhinweise, bevor Sie fortfahren.</p>
+ <label class="consent-check"><input id="consentRequired" type="checkbox"> Ich habe die <a href="#" onclick="openPanel('privacy');return false">Datenschutzhinweise</a> gelesen und möchte mit der Nutzung fortfahren.</label>
+ <button class="btn" id="consentContinue">ZUSTIMMEN &amp; FORTFAHREN</button>
+ <p style="font-size:11px;color:#b9bfd0">Sie können den Shop auch ohne Kundenkonto als Gast ansehen.</p></section>
+</div>
+<div id="royalAuth" role="dialog" aria-modal="true" aria-labelledby="authHeading">
+ <section class="auth-card"><button class="auth-close" id="authClose" aria-label="Schließen">×</button><div class="auth-crest">♛</div>
+ <h2 id="authHeading" class="gold">SAKAN EUROPE VIP</h2><p id="authIntro">Erstellen Sie Ihr Kundenkonto. Wir senden Ihnen einen Bestätigungslink per E-Mail.</p>
+ <form id="authForm"><label for="authEmail">E-Mail-Adresse</label><input id="authEmail" type="email" autocomplete="email" required maxlength="254" placeholder="ihre@email.de">
+ <label class="consent-check"><input id="authPrivacy" type="checkbox" required> Ich habe die Datenschutzhinweise gelesen und stimme der Verarbeitung meiner Angaben zur Kontoerstellung zu.</label>
+ <button class="btn" type="submit" id="authSubmit">KONTO ERSTELLEN</button></form><div id="authStatus" class="auth-status" aria-live="polite"></div></section>
+</div>
+<script>
+(function(){
+ const consent=document.getElementById('gdprConsent'),auth=document.getElementById('royalAuth');
+ const consentKey='sakan_privacy_notice_ack_v1';
+ try{if(!localStorage.getItem(consentKey))consent.style.display='flex'}catch(_){consent.style.display='flex'}
+ document.getElementById('consentContinue').addEventListener('click',function(){
+  if(!document.getElementById('consentRequired').checked){alert('Bitte bestätigen Sie, dass Sie die Datenschutzhinweise gelesen haben.');return}
+  try{localStorage.setItem(consentKey,'acknowledged')}catch(_){}
+  consent.style.display='none';
+ });
+ document.getElementById('authClose').addEventListener('click',()=>auth.style.display='none');
+ window.openRoyalAuth=function(){consent.style.display='none';auth.style.display='flex';document.getElementById('authEmail').focus()};
+ // Wire existing account controls without replacing navigation or store components.
+ document.querySelectorAll('button').forEach(btn=>{
+  const label=(btn.textContent||'').trim().toLowerCase();
+  if(label==='👤'||label.includes('konto')||label.includes('account')||label.includes('anmelden'))btn.addEventListener('click',window.openRoyalAuth);
+ });
+ document.getElementById('authForm').addEventListener('submit',async function(e){
+  e.preventDefault();const status=document.getElementById('authStatus'),submit=document.getElementById('authSubmit');
+  status.textContent='Bestätigungslink wird angefordert …';submit.disabled=true;
+  try{
+   const response=await fetch('/api/auth/request-verification',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:document.getElementById('authEmail').value,privacyConsent:true})});
+   const data=await response.json();if(!response.ok)throw new Error(data.error||'Anfrage fehlgeschlagen.');
+   status.textContent='Falls die Adresse gültig ist, erhalten Sie eine E-Mail mit dem Bestätigungslink.';
+  }catch(err){status.textContent=err.message||'Der Versand ist derzeit nicht verfügbar.'}
+  finally{submit.disabled=false}
+ });
+ const params=new URLSearchParams(location.search);
+ if(params.get('verified')==='1'){auth.style.display='flex';document.getElementById('authIntro').textContent='E-Mail bestätigt. Die dauerhafte Kontoanmeldung benötigt noch eine angebundene Benutzerdatenbank.';document.getElementById('authForm').style.display='none';document.getElementById('authStatus').textContent='E-Mail-Adresse erfolgreich bestätigt.'}
+})();
+</script>
+
+</body></html>
