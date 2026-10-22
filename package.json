@@ -1,0 +1,9 @@
+{
+  "name": "sakan-europe-store",
+  "private": true,
+  "version": "1.0.0",
+  "description": "SAKAN EUROPE storefront and email verification endpoints",
+  "dependencies": {
+    "nodemailer": "^7.0.3"
+  }
+}
