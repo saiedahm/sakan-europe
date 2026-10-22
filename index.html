@@ -61,6 +61,30 @@
 @media(min-width:1400px){.hero{grid-template-columns:minmax(360px,.31fr) minmax(0,1fr);gap:30px}.hero-copy{max-width:405px}}
 @media(max-width:900px){.hero{grid-template-columns:1fr;gap:24px;min-height:0;padding:35px 5%}.hero-copy{max-width:720px}.hero-copy>p{max-width:600px}.hero-benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:720px}.hero-benefits span{grid-template-columns:1fr;gap:5px;font-size:25px}.hero-benefits span>small{grid-column:1}.hero-frame-shell{padding:0 14px}.hero-scene-frame{aspect-ratio:16/10}}
 @media(max-width:540px){.hero{padding:28px 4%}.hero-benefits{grid-template-columns:1fr;gap:13px}.hero-benefits span{grid-template-columns:40px 1fr;column-gap:10px}.hero-benefits span>small{grid-column:2}.hero-frame-shell{padding:0 8px}.hero-scene-caption{font-size:12px;padding:13px 8px 11px}.hero-scene-dots{gap:11px}.hero-scene-dots button{width:12px;height:12px}}
+</style><style id="sakan-cookie-consent-styles">
+#sakanCookieConsent[hidden],#sakanCookieSettings[hidden]{display:none!important}
+#sakanCookieConsent{position:fixed;z-index:100000;left:clamp(12px,2.5vw,36px);bottom:clamp(12px,2.5vw,28px);width:min(760px,calc(100vw - 24px));display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:24px;align-items:center;padding:24px;border:1px solid #D4AF37;border-radius:16px;background:linear-gradient(145deg,rgba(12,18,32,.98),rgba(3,7,16,.99));box-shadow:0 12px 48px #000b,0 0 24px #D4AF3730;color:#f8f5ed;backdrop-filter:blur(16px);opacity:1;transform:translateY(0);transition:opacity .28s ease,transform .28s ease;font-family:Montserrat,Arial,sans-serif}
+#sakanCookieConsent.cookie-consent-leaving{opacity:0;transform:translateY(18px);pointer-events:none}
+#sakanCookieConsent .sakan-cookie-copy{font-size:13px;line-height:1.75;color:#e6e2d8;margin:0}
+#sakanCookieConsent .sakan-cookie-links{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px}
+#sakanCookieConsent .sakan-cookie-links a{color:#f0ca67;text-decoration:underline;text-decoration-color:#D4AF37;text-underline-offset:4px;font-size:12px}
+#sakanCookieConsent .sakan-cookie-actions{display:flex;flex-direction:column;gap:9px}
+#sakanCookieConsent .sakan-cookie-btn{width:100%;min-height:40px;padding:10px 12px;border:1px solid #D4AF37;border-radius:8px;background:#080d18;color:#f2d477;font:600 12px Montserrat,Arial,sans-serif;cursor:pointer;transition:filter .15s,background .15s}
+#sakanCookieConsent .sakan-cookie-btn:hover{filter:brightness(1.18)}
+#sakanCookieConsent .sakan-cookie-btn.primary{background:linear-gradient(120deg,#FFE6A0,#D4AF37 58%,#AA7C11);color:#171108;border-color:#f6d77f}
+#sakanCookieSettings{position:fixed;inset:0;z-index:100001;display:flex;align-items:center;justify-content:center;padding:16px;background:#000c;backdrop-filter:blur(7px);font-family:Montserrat,Arial,sans-serif}
+#sakanCookieSettings .sakan-cookie-settings-card{position:relative;width:min(100%,480px);max-height:90vh;overflow:auto;padding:28px;border:1px solid #D4AF37;border-radius:16px;background:linear-gradient(145deg,#111a2b,#050914);box-shadow:0 16px 55px #000c;color:#f8f5ed}
+#sakanCookieSettings h2{margin:0 42px 10px 0;color:#f0ce73;font:600 24px Cinzel,Georgia,serif}
+#sakanCookieSettings p{font-size:13px;line-height:1.65;color:#d1d1d1}
+#sakanCookieSettings .sakan-cookie-setting-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0;border-bottom:1px solid #d4af3738;font-size:13px}
+#sakanCookieSettings .sakan-cookie-setting-row small{display:block;color:#aaa;margin-top:4px;line-height:1.5}
+#sakanCookieSettings input[type=checkbox]{width:18px;height:18px;accent-color:#D4AF37;flex:0 0 auto}
+#sakanCookieSettings .sakan-cookie-settings-close{position:absolute;right:18px;top:18px;width:34px;height:34px;border:1px solid #D4AF37;border-radius:50%;background:#070b14;color:#f0ce73;font-size:22px;cursor:pointer}
+#sakanCookieSettings .sakan-cookie-settings-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+#sakanCookieSettings .sakan-cookie-btn{padding:12px 10px;border:1px solid #D4AF37;border-radius:8px;background:#080d18;color:#f2d477;font:600 12px Montserrat,Arial,sans-serif;cursor:pointer}
+#sakanCookieSettings .sakan-cookie-btn.primary{background:linear-gradient(120deg,#FFE6A0,#D4AF37 58%,#AA7C11);color:#171108}
+@media(max-width:600px){#sakanCookieConsent{left:10px;bottom:10px;width:calc(100vw - 20px);grid-template-columns:1fr;gap:15px;padding:18px;max-height:85vh;overflow:auto}#sakanCookieConsent .sakan-cookie-actions{display:grid;grid-template-columns:1fr;gap:8px}#sakanCookieConsent .sakan-cookie-btn{min-height:38px}#sakanCookieSettings .sakan-cookie-settings-card{padding:24px 18px}}
+@media(prefers-reduced-motion:reduce){#sakanCookieConsent{transition:none}}
 </style></head>
 <body><div class="topline"></div>
 <header><nav class="nav"><a class="brand-wrap" href="#" onclick="goHome();return false"><span class="crest">♛</span><span class="brand">SAKAN EUROPE<small>EUROPEAN HOME LUXURY</small></span></a>
@@ -239,4 +263,42 @@ document.getElementById("panelContent").innerHTML='<h2>'+title+'</h2>'+out;docum
 })();
 </script>
 
-</body></html>
+
+<div id="sakanCookieConsent" role="dialog" aria-live="polite" aria-labelledby="sakanCookieTitle" aria-describedby="sakanCookieDescription" hidden>
+ <div><div id="sakanCookieTitle" style="font:600 18px Cinzel,Georgia,serif;color:#f0ce73;margin-bottom:9px">Ihre Privatsphäre ist uns wichtig</div>
+ <p class="sakan-cookie-copy" id="sakanCookieDescription">Wir verwenden Cookies, um Ihre Erfahrung auf unserer Website zu verbessern, relevante Produkte anzuzeigen und den Datenverkehr zu analysieren. Durch Klicken auf „Alle akzeptieren“ stimmen Sie der Nutzung von Cookies zu. Weitere Informationen finden Sie in unserer Datenschutzerklärung und Cookie-Richtlinie.</p>
+ <div class="sakan-cookie-links"><a href="#authPrivacy" data-sakan-cookie-policy="privacy">Datenschutzerklärung</a><a href="#sakanCookieSettings" data-sakan-cookie-policy="cookies">Cookie-Richtlinie</a></div></div>
+ <div class="sakan-cookie-actions"><button type="button" class="sakan-cookie-btn primary" id="sakanCookieAccept">Alle akzeptieren</button><button type="button" class="sakan-cookie-btn" id="sakanCookieReject">Alle ablehnen</button><button type="button" class="sakan-cookie-btn" id="sakanCookieCustomize">Cookie-Einstellungen</button></div>
+</div>
+<div id="sakanCookieSettings" hidden role="dialog" aria-modal="true" aria-labelledby="sakanCookieSettingsTitle">
+ <div class="sakan-cookie-settings-card"><button type="button" class="sakan-cookie-settings-close" id="sakanCookieSettingsClose" aria-label="Schließen">×</button>
+ <h2 id="sakanCookieSettingsTitle">Cookie-Einstellungen</h2><p>Wählen Sie aus, welche Cookies verwendet werden dürfen. Technisch notwendige Cookies sind für die grundlegenden Funktionen der Website erforderlich.</p>
+ <div class="sakan-cookie-setting-row"><div><strong>Notwendige Cookies</strong><small>Erforderlich für grundlegende Funktionen und Sicherheit.</small></div><input type="checkbox" checked disabled aria-label="Notwendige Cookies immer aktiv"></div>
+ <div class="sakan-cookie-setting-row"><div><strong>Analyse-Cookies</strong><small>Helfen uns, die Nutzung der Website statistisch zu verstehen.</small></div><input type="checkbox" id="sakanCookieAnalytics"></div>
+ <div class="sakan-cookie-setting-row"><div><strong>Personalisierung</strong><small>Ermöglicht personalisierte Inhalte und Produktempfehlungen.</small></div><input type="checkbox" id="sakanCookiePersonalization"></div>
+ <div class="sakan-cookie-settings-actions"><button type="button" class="sakan-cookie-btn" id="sakanCookieSaveReject">Alle ablehnen</button><button type="button" class="sakan-cookie-btn primary" id="sakanCookieSave">Auswahl speichern</button></div>
+ </div>
+</div>
+<script id="sakan-cookie-consent-script">
+(function(){
+ const KEY="sakan_europe_cookie_consent_v1";
+ const banner=document.getElementById("sakanCookieConsent"),settings=document.getElementById("sakanCookieSettings");
+ if(!banner||!settings)return;
+ let saved=null;
+ try{saved=localStorage.getItem(KEY)}catch(e){}
+ if(!saved)banner.hidden=false;
+ function store(preferences){try{localStorage.setItem(KEY,JSON.stringify({version:1,choice:preferences.choice,necessary:true,analytics:!!preferences.analytics,personalization:!!preferences.personalization,savedAt:new Date().toISOString()}))}catch(e){}}
+ function hideBanner(){banner.classList.add("cookie-consent-leaving");window.setTimeout(()=>{banner.hidden=true;banner.classList.remove("cookie-consent-leaving")},280)}
+ function finish(preferences){store(preferences);hideBanner();settings.hidden=true;document.body.style.overflow=""}
+ function openSettings(){let current=null;try{current=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){}document.getElementById("sakanCookieAnalytics").checked=!!current?.analytics;document.getElementById("sakanCookiePersonalization").checked=!!current?.personalization;settings.hidden=false;document.body.style.overflow="hidden";document.getElementById("sakanCookieSettingsClose").focus()}
+ document.getElementById("sakanCookieAccept").addEventListener("click",()=>finish({choice:"accepted",analytics:true,personalization:true}));
+ document.getElementById("sakanCookieReject").addEventListener("click",()=>finish({choice:"rejected",analytics:false,personalization:false}));
+ document.getElementById("sakanCookieCustomize").addEventListener("click",openSettings);
+ document.getElementById("sakanCookieSettingsClose").addEventListener("click",()=>{settings.hidden=true;document.body.style.overflow=""});
+ document.getElementById("sakanCookieSave").addEventListener("click",()=>finish({choice:"custom",analytics:document.getElementById("sakanCookieAnalytics").checked,personalization:document.getElementById("sakanCookiePersonalization").checked}));
+ document.getElementById("sakanCookieSaveReject").addEventListener("click",()=>finish({choice:"rejected",analytics:false,personalization:false}));
+ settings.addEventListener("click",e=>{if(e.target===settings){settings.hidden=true;document.body.style.overflow=""}});
+ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!settings.hidden){settings.hidden=true;document.body.style.overflow=""}});
+ document.querySelectorAll("[data-sakan-cookie-policy]").forEach(link=>link.addEventListener("click",e=>{e.preventDefault();if(link.dataset.sakanCookiePolicy==="privacy"){const privacy=document.getElementById("authPrivacy");if(privacy){privacy.scrollIntoView({behavior:"smooth",block:"center"});privacy.style.outline="1px solid #D4AF37";setTimeout(()=>privacy.style.outline="",1800)}else openSettings()}else openSettings()}));
+})();
+</script></body></html>
