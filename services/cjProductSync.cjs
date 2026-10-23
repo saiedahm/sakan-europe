@@ -4,8 +4,9 @@ const { put } = require("@vercel/blob");
 const { getPool } = require("../lib/db");
 
 const CATEGORY_RULES = [
-  { id: "master-bedrooms", terms: ["bed", "bedroom", "wardrobe", "nightstand", "mattress", "bed frame"] },
+  // Match children's items first; otherwise the broad "bed"/"bedroom" rules can capture them.
   { id: "kids-bedrooms", terms: ["kids", "kid", "children", "bunk bed", "crib", "toddler", "youth"] },
+  { id: "master-bedrooms", terms: ["bed", "bedroom", "wardrobe", "nightstand", "mattress", "bed frame"] },
   { id: "luxury-furniture", terms: ["sofa", "armchair", "furniture", "table", "chair", "cabinet", "dresser", "lamp", "luxury"] },
   { id: "bedding-decor", terms: ["bedding", "duvet", "pillow", "linen", "blanket", "curtain", "decor", "vase", "wall art"] },
 ];
