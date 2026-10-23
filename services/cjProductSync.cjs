@@ -21,9 +21,9 @@ function text(value) { return String(value == null ? "" : value).replace(/\s+/g,
 function money(value) {
   const n = Number(value);
   if (!Number.isFinite(n) || n <= 0) return null;
-  // Match lib/pricing.ts: 75% markup, rounded upward to a .99 EUR ending.
+  // Match the approved SAKAN rule: 75% markup, then floor(raw) + 0.99 EUR.
   const rawRetail = n * 1.75;
-  return Number((Math.ceil(rawRetail) - 0.01).toFixed(2));
+  return Number((Math.floor(rawRetail) + 0.99).toFixed(2));
 }
 function categoryFor(p) {
   const haystack = [p.name, p.title, p.productName, p.categoryName, p.category, p.description, ...(Array.isArray(p.tags) ? p.tags : [])].map(text).join(" ").toLowerCase();
