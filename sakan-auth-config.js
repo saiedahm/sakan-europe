@@ -1,9 +1,8 @@
 /**
  * Public Supabase browser configuration for SAKAN EUROPE.
- * Replace these empty strings with the Supabase Project URL and publishable/anon key.
- * These values are public by design; NEVER put a service_role key here.
+ * The publishable key is intended for browser use. Never place a secret/service_role key here.
  */
 window.SAKAN_SUPABASE_CONFIG = {
-  url: "",
-  anonKey: ""
+  url: "https://czitsrevuwixcjorfwhq.supabase.co",
+  anonKey: "sb_publishable_tmatW_7TB4nH30zhHKbIrg_OFkvKALr"
 };
