@@ -2,8 +2,12 @@
   "name": "sakan-europe-store",
   "private": true,
   "version": "1.0.0",
-  "description": "SAKAN EUROPE storefront and email verification endpoints",
+  "description": "SAKAN EUROPE storefront and secure payment/invoice endpoints",
   "dependencies": {
-    "nodemailer": "^7.0.3"
+    "nodemailer": "^7.0.3",
+    "pdfkit": "^0.17.2",
+    "pg": "^8.16.3",
+    "stripe": "^18.5.0",
+    "svg-to-pdfkit": "^0.1.8"
   }
 }
