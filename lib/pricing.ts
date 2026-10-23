@@ -1,22 +1,19 @@
 /**
- * SAKAN EUROPE supplier-cost pricing.
- * Applies a 75% markup and rounds upward to a .99 EUR retail price,
- * so the displayed price never falls below the calculated target.
+ * SAKAN EUROPE retail pricing: 75% markup with a luxury .99 EUR ending.
  */
-export function calculateSakanPrice(supplierPriceEUR: number): {
+export function calculateSakanPrice(supplierPriceEUR: number): number {
+  if (!Number.isFinite(supplierPriceEUR) || supplierPriceEUR <= 0) return 0;
+  const rawRetail = supplierPriceEUR * 1.75;
+  return Number((Math.floor(rawRetail) + 0.99).toFixed(2));
+}
+
+export function calculateSakanPriceDetails(supplierPriceEUR: number): {
   costPrice: number;
   retailPrice: number;
   marginEUR: number;
 } {
-  if (!Number.isFinite(supplierPriceEUR) || supplierPriceEUR < 0) {
-    throw new Error("Ungültiger Einkaufspreis");
-  }
-
+  const retailPrice = calculateSakanPrice(supplierPriceEUR);
   const costPrice = Number(supplierPriceEUR.toFixed(2));
-  const rawRetailPrice = costPrice * 1.75;
-  const finalRetailPrice = Math.ceil(rawRetailPrice) - 0.01;
-  const retailPrice = Number(finalRetailPrice.toFixed(2));
-
   return {
     costPrice,
     retailPrice,
