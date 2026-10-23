@@ -49,8 +49,7 @@ export const apiLimiter = rateLimit({
   standardHeaders: "draft-8",
   legacyHeaders: false,
   message: { error: "Zu viele Anfragen. Bitte später erneut versuchen." },
-  // Configure trust proxy only for known, controlled reverse proxies.
-  keyGenerator: (req) => req.ip,
+  // Use express-rate-limit default IP key generation; it handles missing IPs safely.
 });
 
 export const authLimiter = rateLimit({
