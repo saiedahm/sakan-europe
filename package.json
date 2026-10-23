@@ -18,5 +18,10 @@
     "build": "next build",
     "dev": "next dev",
     "start": "next start"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "@types/react": "^19.1.8",
+    "typescript": "^5.8.3"
   }
 }
