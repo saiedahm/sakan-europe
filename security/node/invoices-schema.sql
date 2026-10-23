@@ -11,6 +11,10 @@ CREATE TABLE IF NOT EXISTS sakan_invoices (
  pdf_bytes BYTEA NOT NULL,
  invoice_data JSONB NOT NULL,
  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
- email_sent_at TIMESTAMPTZ NULL
+ email_sent_at TIMESTAMPTZ NULL,
+ email_sending_at TIMESTAMPTZ NULL
 );
 CREATE INDEX IF NOT EXISTS sakan_invoices_created_at_idx ON sakan_invoices(created_at DESC);
+
+-- Safe to rerun on a database where the initial invoice table already exists.
+ALTER TABLE sakan_invoices ADD COLUMN IF NOT EXISTS email_sending_at TIMESTAMPTZ NULL;
