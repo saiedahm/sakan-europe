@@ -59,7 +59,6 @@ export const authLimiter = rateLimit({
   legacyHeaders: false,
   skipSuccessfulRequests: true,
   message: { error: "Zu viele Anmeldeversuche. Bitte später erneut versuchen." },
-  keyGenerator: (req) => req.ip,
 });
 
 export const loginSchema = z.object({
