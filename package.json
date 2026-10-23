@@ -8,6 +8,7 @@
     "pdfkit": "^0.17.2",
     "pg": "^8.16.3",
     "stripe": "^18.5.0",
-    "svg-to-pdfkit": "^0.1.8"
+    "svg-to-pdfkit": "^0.1.8",
+    "@vercel/blob": "^1.1.1"
   }
 }
