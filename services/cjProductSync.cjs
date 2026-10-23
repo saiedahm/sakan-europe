@@ -19,8 +19,10 @@ function required(name) {
 function text(value) { return String(value == null ? "" : value).replace(/\s+/g, " ").trim(); }
 function money(value) {
   const n = Number(value);
-  if (!Number.isFinite(n) || n < 0) return null;
-  return Math.round((n * 1.75 + Number.EPSILON) * 100) / 100;
+  if (!Number.isFinite(n) || n <= 0) return null;
+  // Match lib/pricing.ts: 75% markup, rounded upward to a .99 EUR ending.
+  const rawRetail = n * 1.75;
+  return Number((Math.ceil(rawRetail) - 0.01).toFixed(2));
 }
 function categoryFor(p) {
   const haystack = [p.name, p.title, p.productName, p.categoryName, p.category, p.description, ...(Array.isArray(p.tags) ? p.tags : [])].map(text).join(" ").toLowerCase();
@@ -31,7 +33,7 @@ function first(...values) { return values.find(v => v !== undefined && v !== nul
 function normalize(p) {
   const sku = text(first(p.sku, p.SKU, p.productSku, p.productSKU, p.productId, p.pid, p.id));
   const cost = Number(first(p.sellPrice, p.productPrice, p.price, p.wholesalePrice, p.wholesale_price));
-  if (!sku || !Number.isFinite(cost) || cost < 0) return null;
+  if (!sku || !Number.isFinite(cost) || cost <= 0) return null;
   const rawVariants = first(p.variants, p.variantList, p.productVariants, []);
   const variants = (Array.isArray(rawVariants) ? rawVariants : []).map(v => ({
     id: text(first(v.vid, v.variantId, v.id, v.sku)),
