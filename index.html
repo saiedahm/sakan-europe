@@ -226,40 +226,55 @@ document.getElementById("panelContent").innerHTML='<h2>'+title+'</h2>'+out;docum
 </div>
 <div id="royalAuth" role="dialog" aria-modal="true" aria-labelledby="authHeading">
  <section class="auth-card"><button class="auth-close" id="authClose" aria-label="Schließen">×</button><div class="auth-crest">♛</div>
- <h2 id="authHeading" class="gold">SAKAN EUROPE VIP</h2><p id="authIntro">Erstellen Sie Ihr Kundenkonto. Wir senden Ihnen einen Bestätigungslink per E-Mail.</p>
+ <h2 id="authHeading" class="gold">SAKAN EUROPE VIP</h2><p id="authIntro">Melden Sie sich an oder erstellen Sie Ihr Kundenkonto.</p>
+ <div style="display:flex;gap:8px;margin:16px 0"><button type="button" class="btn" id="authLoginMode" aria-pressed="true">ANMELDEN</button><button type="button" class="btn secondary" id="authRegisterMode" aria-pressed="false">REGISTRIEREN</button></div>
  <form id="authForm"><label for="authEmail">E-Mail-Adresse</label><input id="authEmail" type="email" autocomplete="email" required maxlength="254" placeholder="ihre@email.de">
- <label class="consent-check"><input id="authPrivacy" type="checkbox" required> Ich habe die Datenschutzhinweise gelesen und stimme der Verarbeitung meiner Angaben zur Kontoerstellung zu.</label>
- <button class="btn" type="submit" id="authSubmit">KONTO ERSTELLEN</button></form><div id="authStatus" class="auth-status" aria-live="polite"></div></section>
+ <label for="authPassword">Passwort</label><input id="authPassword" type="password" autocomplete="current-password" required minlength="10" maxlength="128" placeholder="Mindestens 10 Zeichen" style="width:100%;padding:14px;background:#060B18;color:#F8F9FA;border:1px solid #D4AF37;border-radius:8px;margin:12px 0">
+ <div id="authPasswordHint" style="font-size:11px;color:#b9bfd0;text-align:left">Mindestens 10 Zeichen, Groß- und Kleinbuchstabe, Zahl und Sonderzeichen.</div>
+ <label class="consent-check"><input id="authPrivacy" type="checkbox" required> Ich habe die Datenschutzhinweise gelesen und stimme der Verarbeitung meiner Angaben zur Kontoerstellung bzw. Anmeldung zu.</label>
+ <button class="btn" type="submit" id="authSubmit">ANMELDEN</button></form>
+ <button type="button" id="authSignOut" class="btn secondary" style="display:none;margin-top:12px">ABMELDEN</button>
+ <div id="authStatus" class="auth-status" aria-live="polite"></div></section>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/zod@3.25.76/lib/index.umd.min.js"></script>
+<script src="/sakan-auth-config.js"></script>
 <script>
 (function(){
  const consent=document.getElementById('gdprConsent'),auth=document.getElementById('royalAuth');
  const consentKey='sakan_privacy_notice_ack_v1';
+ let mode='login',client=null;
+ const status=document.getElementById('authStatus'),submit=document.getElementById('authSubmit');
+ const emailInput=document.getElementById('authEmail'),passwordInput=document.getElementById('authPassword');
+ const loginButton=document.getElementById('authLoginMode'),registerButton=document.getElementById('authRegisterMode');
+ const emailSchema=window.z&&window.z.string().trim().email().max(254);
+ const passwordSchema=window.z&&window.z.string().min(10).max(128).regex(/[a-z]/,'lowercase').regex(/[A-Z]/,'uppercase').regex(/[0-9]/,'number').regex(/[^A-Za-z0-9]/,'special character');
+ function setStatus(message,type){status.textContent=message;status.style.color=type==='error'?'#ff9b9b':type==='success'?'#a6efbd':'#F3E5AB'}
+ function setMode(next){mode=next;const login=mode==='login';loginButton.classList.toggle('secondary',!login);registerButton.classList.toggle('secondary',login);loginButton.setAttribute('aria-pressed',String(login));registerButton.setAttribute('aria-pressed',String(!login));submit.textContent=login?'ANMELDEN':'KONTO ERSTELLEN';passwordInput.autocomplete=login?'current-password':'new-password';document.getElementById('authIntro').textContent=login?'Melden Sie sich mit Ihrem Kundenkonto an.':'Erstellen Sie Ihr SAKAN EUROPE VIP-Konto.';setStatus('');}
+ function getClient(){if(client)return client;const cfg=window.SAKAN_SUPABASE_CONFIG||{};if(!cfg.url||!cfg.anonKey||!window.supabase?.createClient)throw new Error('Die Anmeldung ist noch nicht konfiguriert. Bitte NEXT_PUBLIC_SUPABASE_URL und NEXT_PUBLIC_SUPABASE_ANON_KEY in Vercel einrichten und sakan-auth-config.js damit verbinden.');client=window.supabase.createClient(cfg.url,cfg.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});return client}
  try{if(!localStorage.getItem(consentKey))consent.style.display='flex'}catch(_){consent.style.display='flex'}
- document.getElementById('consentContinue').addEventListener('click',function(){
-  if(!document.getElementById('consentRequired').checked){alert('Bitte bestätigen Sie, dass Sie die Datenschutzhinweise gelesen haben.');return}
-  try{localStorage.setItem(consentKey,'acknowledged')}catch(_){}
-  consent.style.display='none';
- });
+ document.getElementById('consentContinue').addEventListener('click',function(){if(!document.getElementById('consentRequired').checked){alert('Bitte bestätigen Sie, dass Sie die Datenschutzhinweise gelesen haben.');return}try{localStorage.setItem(consentKey,'acknowledged')}catch(_){}consent.style.display='none'});
  document.getElementById('authClose').addEventListener('click',()=>auth.style.display='none');
- window.openRoyalAuth=function(){consent.style.display='none';auth.style.display='flex';document.getElementById('authEmail').focus()};
- // Wire existing account controls without replacing navigation or store components.
- document.querySelectorAll('button').forEach(btn=>{
-  const label=(btn.textContent||'').trim().toLowerCase();
-  if(label==='👤'||label.includes('konto')||label.includes('account')||label.includes('anmelden'))btn.addEventListener('click',window.openRoyalAuth);
+ loginButton.addEventListener('click',()=>setMode('login'));registerButton.addEventListener('click',()=>setMode('register'));
+ window.openRoyalAuth=function(){consent.style.display='none';auth.style.display='flex';emailInput.focus();refreshSession()};
+ document.querySelectorAll('button').forEach(btn=>{const label=(btn.textContent||'').trim().toLowerCase();if(label==='👤'||label.includes('konto')||label.includes('account')||label.includes('anmelden'))btn.addEventListener('click',window.openRoyalAuth)});
+ async function refreshSession(){try{const sb=getClient();const {data,error}=await sb.auth.getSession();if(error)throw error;if(data.session){setStatus('Angemeldet als '+(data.session.user.email||'VIP-Kunde')+'.','success');document.getElementById('authSignOut').style.display='inline-block';submit.style.display='none'}else{document.getElementById('authSignOut').style.display='none';submit.style.display='inline-block'}}catch(err){if(err.message)setStatus(err.message,'error')}}
+ document.getElementById('authSignOut').addEventListener('click',async()=>{try{const {error}=await getClient().auth.signOut();if(error)throw error;setStatus('Sie wurden abgemeldet.','success');document.getElementById('authSignOut').style.display='none';submit.style.display='inline-block'}catch(err){setStatus(err.message||'Abmeldung fehlgeschlagen.','error')}});
+ document.getElementById('authForm').addEventListener('submit',async function(e){e.preventDefault();submit.disabled=true;setStatus('Bitte warten …');try{
+  const email=emailSchema?emailSchema.safeParse(emailInput.value):{success:/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)};
+  if(!email.success)throw new Error('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+  if(!document.getElementById('authPrivacy').checked)throw new Error('Bitte bestätigen Sie die Datenschutzhinweise.');
+  if(mode==='register'){const valid=passwordSchema?passwordSchema.safeParse(passwordInput.value):{success:passwordInput.value.length>=10&&/[a-z]/.test(passwordInput.value)&&/[A-Z]/.test(passwordInput.value)&&/[0-9]/.test(passwordInput.value)&&/[^A-Za-z0-9]/.test(passwordInput.value)};if(!valid.success)throw new Error('Das Passwort muss mindestens 10 Zeichen sowie Groß-/Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten.')}
+  const sb=getClient();let result;
+  if(mode==='login')result=await sb.auth.signInWithPassword({email:emailInput.value.trim(),password:passwordInput.value});
+  else result=await sb.auth.signUp({email:emailInput.value.trim(),password:passwordInput.value,options:{emailRedirectTo:location.origin+'/?auth=confirmed'}});
+  if(result.error)throw result.error;
+  if(mode==='register'&&!result.data.session){setStatus('Registrierung erfolgreich. Bitte bestätigen Sie Ihre E-Mail über den zugesandten Link.','success')}
+  else{setStatus(mode==='login'?'Erfolgreich angemeldet.':'Konto erstellt und angemeldet.','success');document.getElementById('authSignOut').style.display='inline-block';submit.style.display='none'}
+ }catch(err){setStatus(err.message||'Die Anfrage ist fehlgeschlagen.','error')}finally{submit.disabled=false}
  });
- document.getElementById('authForm').addEventListener('submit',async function(e){
-  e.preventDefault();const status=document.getElementById('authStatus'),submit=document.getElementById('authSubmit');
-  status.textContent='Bestätigungslink wird angefordert …';submit.disabled=true;
-  try{
-   const response=await fetch('/api/auth/request-verification',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:document.getElementById('authEmail').value,privacyConsent:true})});
-   const data=await response.json();if(!response.ok)throw new Error(data.error||'Anfrage fehlgeschlagen.');
-   status.textContent='Falls die Adresse gültig ist, erhalten Sie eine E-Mail mit dem Bestätigungslink.';
-  }catch(err){status.textContent=err.message||'Der Versand ist derzeit nicht verfügbar.'}
-  finally{submit.disabled=false}
- });
- const params=new URLSearchParams(location.search);
- if(params.get('verified')==='1'){auth.style.display='flex';document.getElementById('authIntro').textContent='E-Mail bestätigt. Die dauerhafte Kontoanmeldung benötigt noch eine angebundene Benutzerdatenbank.';document.getElementById('authForm').style.display='none';document.getElementById('authStatus').textContent='E-Mail-Adresse erfolgreich bestätigt.'}
+ const params=new URLSearchParams(location.search);if(params.get('auth')==='confirmed'){auth.style.display='flex';setStatus('E-Mail-Adresse bestätigt. Sie können sich jetzt anmelden.','success')}
+ if(window.supabase?.createClient&&window.SAKAN_SUPABASE_CONFIG?.url&&window.SAKAN_SUPABASE_CONFIG?.anonKey){try{const sb=getClient();sb.auth.onAuthStateChange((_event,session)=>{if(session&&auth.style.display==='flex')setStatus('Angemeldet als '+(session.user.email||'VIP-Kunde')+'.','success')})}catch(_){}}
 })();
 </script>
 
