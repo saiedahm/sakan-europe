@@ -85,6 +85,9 @@ export async function upsertCatalogProducts(products:Array<Omit<CatalogProduct,"
         [p.id,p.supplierId,p.name,p.description,p.imageUrl,JSON.stringify(p.images),p.supplierPrice,p.retailPrice,p.currency,p.category,p.subcategory,JSON.stringify(p.tags),p.supplierCategory,p.stock]);
       count += result.rowCount ?? 0;
     }
+    if (options.insertOnly && count !== products.length) {
+      throw new Error(`Expected ${products.length} new products but inserted ${count}; transaction rolled back to preserve the exact batch size.`);
+    }
     await client.query("COMMIT"); return count;
   } catch(error) { await client.query("ROLLBACK"); throw error; }
   finally { client.release(); }
