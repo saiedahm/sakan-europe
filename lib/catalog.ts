@@ -83,6 +83,8 @@ export async function ensureCatalogTable() {
     await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS supplier_category TEXT NOT NULL DEFAULT ''");
     await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS stock INTEGER");
     await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS active BOOLEAN NOT NULL DEFAULT TRUE");
+    await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS sync_status VARCHAR(50) DEFAULT 'synced'");
+    await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS sync_error TEXT");
     await client.query("COMMIT");
   } catch (error) {
     await client.query("ROLLBACK");
