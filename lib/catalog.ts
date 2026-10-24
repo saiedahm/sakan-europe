@@ -49,6 +49,17 @@ export async function ensureCatalogTable() {
     await client.query("BEGIN");
     // Serialize first-time schema setup across concurrent serverless invocations.
     await client.query("SELECT pg_advisory_xact_lock(714928462023)");
+    await client.query(`CREATE TABLE IF NOT EXISTS sakan_products (
+      id VARCHAR(255) PRIMARY KEY,
+      title TEXT NOT NULL,
+      description TEXT,
+      price NUMERIC(10, 2) NOT NULL,
+      category VARCHAR(255),
+      subcategory VARCHAR(255),
+      tags TEXT[],
+      images TEXT[],
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    )`);
     await client.query(`CREATE TABLE IF NOT EXISTS sakan_catalog_products (
       id TEXT PRIMARY KEY, supplier_id TEXT NOT NULL UNIQUE, name TEXT NOT NULL,
       description TEXT NOT NULL DEFAULT '', image_url TEXT NOT NULL DEFAULT '',
