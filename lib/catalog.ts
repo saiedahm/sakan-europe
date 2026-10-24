@@ -43,18 +43,30 @@ export function makeTags(category:CatalogCategory, subcategory:string, text:stri
   return [...tags].slice(0,10);
 }
 export async function ensureCatalogTable() {
-  const pool=getPool();
-  await pool.query(`CREATE TABLE IF NOT EXISTS sakan_catalog_products (
-    id TEXT PRIMARY KEY, supplier_id TEXT NOT NULL UNIQUE, name TEXT NOT NULL,
-    description TEXT NOT NULL DEFAULT '', image_url TEXT NOT NULL DEFAULT '',
-    images JSONB NOT NULL DEFAULT '[]'::jsonb, supplier_price NUMERIC(12,2) NOT NULL,
-    retail_price NUMERIC(12,2) NOT NULL, currency TEXT NOT NULL DEFAULT 'USD',
-    category TEXT NOT NULL, subcategory TEXT NOT NULL DEFAULT 'Home Essentials',
-    tags JSONB NOT NULL DEFAULT '[]'::jsonb, supplier_category TEXT NOT NULL DEFAULT '', stock INTEGER,
-    active BOOLEAN NOT NULL DEFAULT TRUE, updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-  )`);
-  await pool.query("ALTER TABLE sakan_catalog_products ADD COLUMN IF NOT EXISTS subcategory TEXT NOT NULL DEFAULT 'Home Essentials'");
-  await pool.query("ALTER TABLE sakan_catalog_products ADD COLUMN IF NOT EXISTS tags JSONB NOT NULL DEFAULT '[]'::jsonb");
+  const pool = getPool();
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
+    // Serialize first-time schema setup across concurrent serverless invocations.
+    await client.query("SELECT pg_advisory_xact_lock(714928462023)");
+    await client.query(`CREATE TABLE IF NOT EXISTS sakan_catalog_products (
+      id TEXT PRIMARY KEY, supplier_id TEXT NOT NULL UNIQUE, name TEXT NOT NULL,
+      description TEXT NOT NULL DEFAULT '', image_url TEXT NOT NULL DEFAULT '',
+      images JSONB NOT NULL DEFAULT '[]'::jsonb, supplier_price NUMERIC(12,2) NOT NULL,
+      retail_price NUMERIC(12,2) NOT NULL, currency TEXT NOT NULL DEFAULT 'USD',
+      category TEXT NOT NULL, subcategory TEXT NOT NULL DEFAULT 'Home Essentials',
+      tags JSONB NOT NULL DEFAULT '[]'::jsonb, supplier_category TEXT NOT NULL DEFAULT '', stock INTEGER,
+      active BOOLEAN NOT NULL DEFAULT TRUE, updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )`);
+    await client.query("ALTER TABLE sakan_catalog_products ADD COLUMN IF NOT EXISTS subcategory TEXT NOT NULL DEFAULT 'Home Essentials'");
+    await client.query("ALTER TABLE sakan_catalog_products ADD COLUMN IF NOT EXISTS tags JSONB NOT NULL DEFAULT '[]'::jsonb");
+    await client.query("COMMIT");
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
 }
 export async function existingSupplierIds():Promise<Set<string>> {
   await ensureCatalogTable();
