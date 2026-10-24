@@ -56,23 +56,33 @@ export async function ensureCatalogTable() {
       price NUMERIC(10, 2) NOT NULL,
       category VARCHAR(255),
       subcategory VARCHAR(255),
-      tags TEXT[],
-      images TEXT[],
-      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      tags TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[],
+      images TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[],
+      supplier VARCHAR(255),
+      supplier_product_id VARCHAR(255),
+      supplier_price NUMERIC(12,2),
+      retail_price NUMERIC(12,2),
+      currency VARCHAR(10) NOT NULL DEFAULT 'USD',
+      supplier_category TEXT NOT NULL DEFAULT '',
+      stock INTEGER,
+      active BOOLEAN NOT NULL DEFAULT TRUE,
+      synced_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
     )`);
     await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS supplier VARCHAR(255)");
     await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS supplier_product_id VARCHAR(255)");
-    await client.query(`CREATE TABLE IF NOT EXISTS sakan_catalog_products (
-      id TEXT PRIMARY KEY, supplier_id TEXT NOT NULL UNIQUE, name TEXT NOT NULL,
-      description TEXT NOT NULL DEFAULT '', image_url TEXT NOT NULL DEFAULT '',
-      images JSONB NOT NULL DEFAULT '[]'::jsonb, supplier_price NUMERIC(12,2) NOT NULL,
-      retail_price NUMERIC(12,2) NOT NULL, currency TEXT NOT NULL DEFAULT 'USD',
-      category TEXT NOT NULL, subcategory TEXT NOT NULL DEFAULT 'Home Essentials',
-      tags JSONB NOT NULL DEFAULT '[]'::jsonb, supplier_category TEXT NOT NULL DEFAULT '', stock INTEGER,
-      active BOOLEAN NOT NULL DEFAULT TRUE, updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-    )`);
-    await client.query("ALTER TABLE sakan_catalog_products ADD COLUMN IF NOT EXISTS subcategory TEXT NOT NULL DEFAULT 'Home Essentials'");
-    await client.query("ALTER TABLE sakan_catalog_products ADD COLUMN IF NOT EXISTS tags JSONB NOT NULL DEFAULT '[]'::jsonb");
+    await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS synced_at TIMESTAMPTZ NOT NULL DEFAULT NOW()");
+    await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()");
+    await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS subcategory VARCHAR(255)");
+    await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS tags TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[]");
+    await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS images TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[]");
+    await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS supplier_price NUMERIC(12,2)");
+    await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS retail_price NUMERIC(12,2)");
+    await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS currency VARCHAR(10) NOT NULL DEFAULT 'USD'");
+    await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS supplier_category TEXT NOT NULL DEFAULT ''");
+    await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS stock INTEGER");
+    await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS active BOOLEAN NOT NULL DEFAULT TRUE");
     await client.query("COMMIT");
   } catch (error) {
     await client.query("ROLLBACK");
@@ -83,31 +93,34 @@ export async function ensureCatalogTable() {
 }
 export async function existingSupplierIds():Promise<Set<string>> {
   await ensureCatalogTable();
-  const {rows}=await getPool().query("SELECT supplier_id FROM sakan_catalog_products");
-  return new Set<string>(rows.map((row:{supplier_id:string})=>row.supplier_id));
+  const {rows}=await getPool().query("SELECT supplier_product_id FROM sakan_products WHERE supplier_product_id IS NOT NULL");
+  return new Set<string>(rows.map((row:{supplier_product_id:string})=>row.supplier_product_id));
 }
 export async function listCatalogProducts() {
   await ensureCatalogTable();
-  const {rows}=await getPool().query(`SELECT id,supplier_id AS "supplierId",name,description,
-    image_url AS "imageUrl",images,supplier_price AS "supplierPrice",retail_price AS "retailPrice",
-    currency,category,subcategory,tags,supplier_category AS "supplierCategory",stock,updated_at AS "updatedAt"
-    FROM sakan_catalog_products WHERE active=TRUE ORDER BY category,name LIMIT 2000`);
-  return rows as CatalogProduct[];
+  const {rows}=await getPool().query(`SELECT id,supplier_product_id AS "supplierId",title AS name,
+    COALESCE(description,'') AS description,
+    COALESCE(images[1],'') AS "imageUrl",images,
+    COALESCE(supplier_price,price) AS "supplierPrice",COALESCE(retail_price,price) AS "retailPrice",
+    COALESCE(currency,'USD') AS currency,category,subcategory,tags,
+    COALESCE(supplier_category,'') AS "supplierCategory",stock,updated_at AS "updatedAt"
+    FROM sakan_products WHERE active=TRUE ORDER BY category,title LIMIT 2000`);
+  return rows.map((row: any) => ({...row, images: row.images ?? [], tags: row.tags ?? []})) as CatalogProduct[];
 }
 export async function upsertCatalogProducts(products:Array<Omit<CatalogProduct,"updatedAt">>, options:{insertOnly?:boolean}={}) {
   await ensureCatalogTable(); const pool=getPool(); const client=await pool.connect(); let count=0;
   try {
     await client.query("BEGIN");
     for (const p of products) {
-      const conflictAction = options.insertOnly ? "ON CONFLICT (supplier_id) DO NOTHING" : `ON CONFLICT (supplier_id) DO UPDATE SET name=EXCLUDED.name,description=EXCLUDED.description,
-        image_url=EXCLUDED.image_url,images=EXCLUDED.images,supplier_price=EXCLUDED.supplier_price,
-        retail_price=EXCLUDED.retail_price,currency=EXCLUDED.currency,category=EXCLUDED.category,
-        subcategory=EXCLUDED.subcategory,tags=EXCLUDED.tags,supplier_category=EXCLUDED.supplier_category,
-        stock=EXCLUDED.stock,active=TRUE,updated_at=NOW()`;
-      const result=await client.query(`INSERT INTO sakan_catalog_products
-        (id,supplier_id,name,description,image_url,images,supplier_price,retail_price,currency,category,subcategory,tags,supplier_category,stock,active,updated_at)
-        VALUES ($1,$2,$3,$4,$5,$6::jsonb,$7,$8,$9,$10,$11,$12::jsonb,$13,$14,TRUE,NOW()) ${conflictAction}`,
-        [p.id,p.supplierId,p.name,p.description,p.imageUrl,JSON.stringify(p.images),p.supplierPrice,p.retailPrice,p.currency,p.category,p.subcategory,JSON.stringify(p.tags),p.supplierCategory,p.stock]);
+      const conflictAction = options.insertOnly ? "ON CONFLICT (supplier_product_id) DO NOTHING" : `ON CONFLICT (supplier_product_id) DO UPDATE SET
+        title=EXCLUDED.title,description=EXCLUDED.description,price=EXCLUDED.price,category=EXCLUDED.category,
+        subcategory=EXCLUDED.subcategory,tags=EXCLUDED.tags,images=EXCLUDED.images,supplier=EXCLUDED.supplier,
+        supplier_price=EXCLUDED.supplier_price,retail_price=EXCLUDED.retail_price,currency=EXCLUDED.currency,
+        supplier_category=EXCLUDED.supplier_category,stock=EXCLUDED.stock,active=TRUE,synced_at=NOW(),updated_at=NOW()`;
+      const result=await client.query(`INSERT INTO sakan_products
+        (id,supplier_product_id,title,description,price,category,subcategory,tags,images,supplier,supplier_price,retail_price,currency,supplier_category,stock,active,synced_at,created_at,updated_at)
+        VALUES ($1,$2,$3,$4,$5,$6,$7,$8::text[],$9::text[],$10,$11,$12,$13,$14,$15,TRUE,NOW(),NOW(),NOW()) ${conflictAction}`,
+        [p.id,p.supplierId,p.name,p.description,p.retailPrice,p.category,p.subcategory,p.tags,p.images,"CJ Dropshipping",p.supplierPrice,p.retailPrice,p.currency,p.supplierCategory,p.stock]);
       count += result.rowCount ?? 0;
     }
     if (options.insertOnly && count !== products.length) {
