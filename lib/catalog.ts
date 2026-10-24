@@ -60,6 +60,8 @@ export async function ensureCatalogTable() {
       images TEXT[],
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     )`);
+    await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS supplier VARCHAR(255)");
+    await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS supplier_product_id VARCHAR(255)");
     await client.query(`CREATE TABLE IF NOT EXISTS sakan_catalog_products (
       id TEXT PRIMARY KEY, supplier_id TEXT NOT NULL UNIQUE, name TEXT NOT NULL,
       description TEXT NOT NULL DEFAULT '', image_url TEXT NOT NULL DEFAULT '',
