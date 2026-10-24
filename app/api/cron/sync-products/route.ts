@@ -3,7 +3,7 @@ import { mapCategory, mapSubcategory, makeTags, retailPrice75, existingSupplierI
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
-const TARGET = 500;
+const TARGET = 400;
 type CJProduct = {
   pid?: string; id?: string; productNameEn?: string; productName?: string;
   description?: string; bigImage?: string; productImage?: string; productImageSet?: string[];
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
     }> = [];
     const categoryCounts: Record<string,number> = { "master-bedrooms":0, "kids-bedrooms":0, "luxury-furniture":0, "bedding-decor":0 };
     let fetched = 0, skipped = 0, pagesFetched = 0;
-    // Rotate across category searches and paginate until 500 new, validated products are collected.
+    // Rotate across category searches and paginate until the UI-sized 400-product target is reached.
     for (let page = 1; page <= 20 && candidates.length < TARGET; page++) {
       const pageBatches = await Promise.all(searches.map(search => fetchPage(search.keyword, page, token)));
       pagesFetched += pageBatches.length;
@@ -92,20 +92,20 @@ export async function GET(request: NextRequest) {
         }
       }
     }
-    if (candidates.length !== TARGET) {
-      return NextResponse.json({ success:false, message:"CJ pagination did not produce 500 eligible new products; nothing was inserted.", target:TARGET, eligible:candidates.length, fetched, skipped, pagesFetched, existingRecordsExcluded:existing.size, categoryCounts }, { status:502 });
+    if (candidates.length === 0) {
+      return NextResponse.json({ success:false, message:"CJ returned no eligible new products; nothing was inserted.", target:TARGET, eligible:0, fetched, skipped, pagesFetched, existingRecordsExcluded:existing.size, categoryCounts }, { status:502 });
     }
     if (Object.values(categoryCounts).some(count => count === 0)) {
-      return NextResponse.json({ success:false, message:"The 500-item batch did not cover all four categories; nothing was inserted.", target:TARGET, eligible:candidates.length, categoryCounts }, { status:502 });
+      return NextResponse.json({ success:false, message:"CJ results did not cover all four categories; nothing was inserted.", target:TARGET, eligible:candidates.length, categoryCounts }, { status:502 });
     }
     const inserted = await upsertCatalogProducts(candidates, { insertOnly:true });
     return NextResponse.json({
-      success:inserted===TARGET, target:TARGET, inserted, fetched, skipped, pagesFetched,
+      success:inserted > 0, target:TARGET, eligible:candidates.length, inserted, fetched, skipped, pagesFetched,
       existingRecordsExcluded:existing.size, categoryCounts, markupPercent:75,
       priceRule:"floor(supplierPrice * 1.75) + 0.99", currency:"USD",
       subcategoriesAndTags:"English metadata-derived values stored per product",
-      message:inserted===TARGET ? "Exactly 500 unique products inserted." : "Concurrent database changes prevented exactly 500 inserts; inspect the database before retrying."
-    }, { status:inserted===TARGET ? 200 : 409 });
+      message:inserted===TARGET ? "UI-sized 400-product target reached." : `Inserted ${inserted} new products from ${candidates.length} eligible candidates; rerun sync to fill remaining UI capacity.`
+    }, { status:inserted > 0 ? 200 : 409 });
   } catch (error) {
     console.error("CJ bulk catalog import failed:", error);
     return NextResponse.json({ success:false, message:error instanceof Error ? error.message : "Catalog import failed." }, { status:502 });
