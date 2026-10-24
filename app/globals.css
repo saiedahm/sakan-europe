@@ -29,3 +29,5 @@
 .auth-back{display:block;width:max-content;margin:25px auto 0;font-size:11px;padding-bottom:4px}
 @media(max-width:900px){.header-actions{gap:12px}.header-actions>.header-link{display:none}.auth-links{gap:10px;font-size:9px}}
 @media(max-width:700px){.auth-page{padding:20px 14px}.auth-card{padding:28px 22px}.auth-links .auth-user{max-width:75px}.auth-links{gap:8px}}
+
+.auth-text-button{border:0;border-bottom:1px solid var(--gold);padding:8px 0;background:transparent;color:inherit;font:inherit;font-size:10px;letter-spacing:.5px;cursor:pointer}
