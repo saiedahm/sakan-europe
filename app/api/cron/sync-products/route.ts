@@ -56,11 +56,13 @@ export async function GET(request: NextRequest) {
     let fetched = 0, skipped = 0, pagesFetched = 0;
     // Rotate across category searches and paginate until 500 new, validated products are collected.
     for (let page = 1; page <= 20 && candidates.length < TARGET; page++) {
-      for (const search of searches) {
+      const pageBatches = await Promise.all(searches.map(search => fetchPage(search.keyword, page, token)));
+      pagesFetched += pageBatches.length;
+      fetched += pageBatches.reduce((sum, items) => sum + items.length, 0);
+      for (let searchIndex = 0; searchIndex < searches.length; searchIndex++) {
+        const search = searches[searchIndex];
+        const items = pageBatches[searchIndex];
         if (candidates.length >= TARGET) break;
-        const items = await fetchPage(search.keyword, page, token);
-        pagesFetched++;
-        fetched += items.length;
         if (items.length === 0) continue;
         for (const p of items) {
           if (candidates.length >= TARGET) break;
