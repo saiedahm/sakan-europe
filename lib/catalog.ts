@@ -71,6 +71,7 @@ export async function ensureCatalogTable() {
       updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
     )`);
     await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS supplier VARCHAR(255)");
+    await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS sku VARCHAR(255)");
     await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS supplier_product_id VARCHAR(255)");
     await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS synced_at TIMESTAMPTZ NOT NULL DEFAULT NOW()");
     await client.query("ALTER TABLE sakan_products ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()");
