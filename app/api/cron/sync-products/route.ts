@@ -66,6 +66,10 @@ export async function GET(request: NextRequest) {
     const startedAt = Date.now();
     const page = await getCatalogSyncPage();
     const existing = await existingSupplierIds();
+    if (existing.size >= TARGET) {
+      return NextResponse.json({ success: true, requestId, target: TARGET, existingRecords: existing.size, inserted: 0, complete: true, message: "Target of 400 catalog products already reached." }, { status: 200 });
+    }
+    const remainingTarget = TARGET - existing.size;
     const seen = new Set<string>();
     const candidates: Array<{
       id: string; supplierId: string; name: string; description: string; imageUrl: string; images: string[];
@@ -119,11 +123,11 @@ export async function GET(request: NextRequest) {
       }, { status: 200 });
     }
 
-    const batch = candidates.slice(0, BATCH_SIZE);
+    const batch = candidates.slice(0, Math.min(BATCH_SIZE, remainingTarget));
     if (batch.length > 0) {
       const inserted = await upsertCatalogProducts(batch, { insertOnly: true });
       // Keep the page until all eligible products from that page have been handled.
-      const nextPage = candidates.length > BATCH_SIZE ? page : page + 1;
+      const nextPage = candidates.length > batch.length ? page : page + 1;
       await setCatalogSyncPage(nextPage);
       return NextResponse.json({
         success: true, requestId, target: TARGET, page, batchSize: BATCH_SIZE,
