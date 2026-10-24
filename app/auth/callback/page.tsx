@@ -25,7 +25,7 @@ export default function AuthCallbackPage() {
         if (active) {
           setMessage("Your account is confirmed. Welcome to SAKAN EUROPE.");
           const next = params.get("next");
-          window.location.replace(next?.startsWith("/") ? next : "/");
+          window.location.replace(next?.startsWith("/") && !next.startsWith("//") ? next : "/");
         }
       } catch (e) {
         if (active) { setFailed(true); setMessage(e instanceof Error ? e.message : "Could not confirm your account."); }
