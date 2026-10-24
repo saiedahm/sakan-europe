@@ -18,7 +18,8 @@
     "react-dom": "^19.1.1",
     "stripe": "^18.5.0",
     "svg-to-pdfkit": "^0.1.8",
-    "zod": "^3.25.76"
+    "zod": "^3.25.76",
+    "@supabase/supabase-js": "^2.76.1"
   },
   "scripts": {
     "build": "next build",

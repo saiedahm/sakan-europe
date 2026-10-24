@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import AuthLinks from "@/components/AuthLinks";
 
 type Product = {
   id: string; name: string; description: string; imageUrl: string;
@@ -50,7 +51,7 @@ export default function HomePage() {
       <header className="topbar">
         <a className="brand" href="/" aria-label="SAKAN EUROPE home"><span className="brand-mark">S</span><span>SAKAN <b>EUROPE</b></span></a>
         <nav><a href="#collections">COLLECTIONS</a><a href="#catalog">SHOP</a><a href="#about">OUR PHILOSOPHY</a></nav>
-        <a className="header-link" href="#catalog">DISCOVER THE COLLECTION ↗</a>
+        <div className="header-actions"><a className="header-link" href="#catalog">DISCOVER THE COLLECTION ↗</a><AuthLinks /></div>
       </header>
       <section className="hero">
         <div className="hero-image" />
