@@ -56,6 +56,11 @@ export async function ensureCatalogTable() {
   await pool.query("ALTER TABLE sakan_catalog_products ADD COLUMN IF NOT EXISTS subcategory TEXT NOT NULL DEFAULT 'Home Essentials'");
   await pool.query("ALTER TABLE sakan_catalog_products ADD COLUMN IF NOT EXISTS tags JSONB NOT NULL DEFAULT '[]'::jsonb");
 }
+export async function existingSupplierIds():Promise<Set<string>> {
+  await ensureCatalogTable();
+  const {rows}=await getPool().query("SELECT supplier_id FROM sakan_catalog_products");
+  return new Set<string>(rows.map((row:{supplier_id:string})=>row.supplier_id));
+}
 export async function listCatalogProducts() {
   await ensureCatalogTable();
   const {rows}=await getPool().query(`SELECT id,supplier_id AS "supplierId",name,description,
@@ -64,21 +69,21 @@ export async function listCatalogProducts() {
     FROM sakan_catalog_products WHERE active=TRUE ORDER BY category,name LIMIT 2000`);
   return rows as CatalogProduct[];
 }
-export async function upsertCatalogProducts(products:Array<Omit<CatalogProduct,"updatedAt">>) {
+export async function upsertCatalogProducts(products:Array<Omit<CatalogProduct,"updatedAt">>, options:{insertOnly?:boolean}={}) {
   await ensureCatalogTable(); const pool=getPool(); const client=await pool.connect(); let count=0;
   try {
     await client.query("BEGIN");
     for (const p of products) {
-      await client.query(`INSERT INTO sakan_catalog_products
-        (id,supplier_id,name,description,image_url,images,supplier_price,retail_price,currency,category,subcategory,tags,supplier_category,stock,active,updated_at)
-        VALUES ($1,$2,$3,$4,$5,$6::jsonb,$7,$8,$9,$10,$11,$12::jsonb,$13,$14,TRUE,NOW())
-        ON CONFLICT (supplier_id) DO UPDATE SET name=EXCLUDED.name,description=EXCLUDED.description,
+      const conflictAction = options.insertOnly ? "ON CONFLICT (supplier_id) DO NOTHING" : `ON CONFLICT (supplier_id) DO UPDATE SET name=EXCLUDED.name,description=EXCLUDED.description,
         image_url=EXCLUDED.image_url,images=EXCLUDED.images,supplier_price=EXCLUDED.supplier_price,
         retail_price=EXCLUDED.retail_price,currency=EXCLUDED.currency,category=EXCLUDED.category,
         subcategory=EXCLUDED.subcategory,tags=EXCLUDED.tags,supplier_category=EXCLUDED.supplier_category,
-        stock=EXCLUDED.stock,active=TRUE,updated_at=NOW()`,
+        stock=EXCLUDED.stock,active=TRUE,updated_at=NOW()`;
+      const result=await client.query(`INSERT INTO sakan_catalog_products
+        (id,supplier_id,name,description,image_url,images,supplier_price,retail_price,currency,category,subcategory,tags,supplier_category,stock,active,updated_at)
+        VALUES ($1,$2,$3,$4,$5,$6::jsonb,$7,$8,$9,$10,$11,$12::jsonb,$13,$14,TRUE,NOW()) ${conflictAction}`,
         [p.id,p.supplierId,p.name,p.description,p.imageUrl,JSON.stringify(p.images),p.supplierPrice,p.retailPrice,p.currency,p.category,p.subcategory,JSON.stringify(p.tags),p.supplierCategory,p.stock]);
-      count++;
+      count += result.rowCount ?? 0;
     }
     await client.query("COMMIT"); return count;
   } catch(error) { await client.query("ROLLBACK"); throw error; }
