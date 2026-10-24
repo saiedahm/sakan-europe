@@ -2,17 +2,16 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export default function AuthCallbackPage() {
-  const params = useSearchParams();
   const [message, setMessage] = useState("Confirming your account…");
   const [failed, setFailed] = useState(false);
   useEffect(() => {
     let active = true;
     async function finish() {
       try {
+        const params = new URLSearchParams(window.location.search);
         const supabase = getSupabaseBrowserClient();
         const code = params.get("code");
         if (code) {
@@ -25,7 +24,8 @@ export default function AuthCallbackPage() {
         }
         if (active) {
           setMessage("Your account is confirmed. Welcome to SAKAN EUROPE.");
-          window.location.replace(params.get("next")?.startsWith("/") ? params.get("next")! : "/");
+          const next = params.get("next");
+          window.location.replace(next?.startsWith("/") ? next : "/");
         }
       } catch (e) {
         if (active) { setFailed(true); setMessage(e instanceof Error ? e.message : "Could not confirm your account."); }
@@ -33,7 +33,7 @@ export default function AuthCallbackPage() {
     }
     void finish();
     return () => { active = false; };
-  }, [params]);
+  }, []);
   return <main className="auth-page"><section className="auth-card">
     <Link href="/" className="auth-brand"><span className="brand-mark">S</span><span>SAKAN <b>EUROPE</b></span></Link>
     <h1>{failed ? "Confirmation needed." : "One moment."}</h1>
