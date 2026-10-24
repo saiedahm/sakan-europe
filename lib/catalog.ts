@@ -93,6 +93,30 @@ export async function ensureCatalogTable() {
     client.release();
   }
 }
+export async function getCatalogSyncPage(): Promise<number> {
+  const pool = getPool();
+  await pool.query(`CREATE TABLE IF NOT EXISTS sakan_catalog_sync_state (
+    id SMALLINT PRIMARY KEY DEFAULT 1 CHECK (id = 1),
+    next_page INTEGER NOT NULL DEFAULT 1,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  )`);
+  const { rows } = await pool.query(
+    "INSERT INTO sakan_catalog_sync_state (id, next_page) VALUES (1, 1) ON CONFLICT (id) DO UPDATE SET id = EXCLUDED.id RETURNING next_page"
+  );
+  return Math.max(1, Number(rows[0]?.next_page) || 1);
+}
+export async function setCatalogSyncPage(nextPage: number): Promise<void> {
+  const pool = getPool();
+  await pool.query(`CREATE TABLE IF NOT EXISTS sakan_catalog_sync_state (
+    id SMALLINT PRIMARY KEY DEFAULT 1 CHECK (id = 1),
+    next_page INTEGER NOT NULL DEFAULT 1,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  )`);
+  await pool.query(
+    "INSERT INTO sakan_catalog_sync_state (id, next_page, updated_at) VALUES (1, $1, NOW()) ON CONFLICT (id) DO UPDATE SET next_page = EXCLUDED.next_page, updated_at = NOW()",
+    [Math.max(1, Math.trunc(nextPage))]
+  );
+}
 export async function existingSupplierIds():Promise<Set<string>> {
   await ensureCatalogTable();
   const {rows}=await getPool().query("SELECT supplier_product_id FROM sakan_products WHERE supplier_product_id IS NOT NULL");
